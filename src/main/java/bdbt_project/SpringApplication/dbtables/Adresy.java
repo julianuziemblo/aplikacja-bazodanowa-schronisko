@@ -2,13 +2,13 @@ package bdbt_project.SpringApplication.dbtables;
 
 
 public class Adresy {
-    private int NR_ADRESU;
-    private String KRAJ;
-    private String MIASTO;
-    private String KOD_POCZTOWY;
-    private String ULICA;
-    private String NR_DOMU;
-    private Integer NR_MIESZKANIA;
+    private int nr_adresu;
+    private String kraj;
+    private String miasto;
+    private String kod_pocztowy;
+    private String ulica;
+    private String nr_domu;
+    private Integer nr_mieszkania;
 
     public Adresy(){
 
@@ -18,62 +18,62 @@ public class Adresy {
                   String miasto, String kod_pocztowy,
                   String ulica, String nr_domu,
                   Integer nr_mieszkania) {
-        this.NR_ADRESU = nr_adresu;
-        this.KRAJ = kraj;
-        this.MIASTO = miasto;
-        this.KOD_POCZTOWY = kod_pocztowy;
-        this.ULICA = ulica;
-        this.NR_DOMU = nr_domu;
-        this.NR_MIESZKANIA = nr_mieszkania;
+        this.nr_adresu = nr_adresu;
+        this.kraj = kraj;
+        this.miasto = miasto;
+        this.kod_pocztowy = kod_pocztowy;
+        this.ulica = ulica;
+        this.nr_domu = nr_domu;
+        this.nr_mieszkania = nr_mieszkania;
     }
 
-    public Integer getNR_ADRESU() {
-        return NR_ADRESU;
+    public Integer getNr_adresu() {
+        return nr_adresu;
     }
-    public void setNR_ADRESU(Integer NR_ADRESU) {
-        this.NR_ADRESU = NR_ADRESU;
-    }
-
-    public String getKRAJ() {
-        return KRAJ;
-    }
-    public void setKRAJ(String KRAJ) {
-        this.KRAJ = KRAJ;
+    public void setNr_adresu(Integer nr_adresu) {
+        this.nr_adresu = nr_adresu;
     }
 
-    public String getMIASTO() {
-        return MIASTO;
+    public String getKraj() {
+        return kraj;
     }
-    public void setMIASTO(String MIASTO) {
-        this.MIASTO = MIASTO;
-    }
-
-    public String getKOD_POCZTOWY() {
-        return KOD_POCZTOWY;
-    }
-    public void setKOD_POCZTOWY(String KOD_POCZTOWY) {
-        this.KOD_POCZTOWY = KOD_POCZTOWY;
+    public void setKraj(String kraj) {
+        this.kraj = kraj;
     }
 
-    public String getULICA() {
-        return ULICA;
+    public String getMiasto() {
+        return miasto;
     }
-    public void setULICA(String ULICA) {
-        this.ULICA = ULICA;
-    }
-
-    public String getNR_DOMU() {
-        return NR_DOMU;
-    }
-    public void setNR_DOMU(String NR_DOMU) {
-        this.NR_DOMU = NR_DOMU;
+    public void setMiasto(String miasto) {
+        this.miasto = miasto;
     }
 
-    public Integer getNR_MIESZKANIA() {
-        return NR_MIESZKANIA;
+    public String getKod_pocztowy() {
+        return kod_pocztowy;
     }
-    public void setNR_MIESZKANIA(Integer NR_MIESZKANIA) {
-        this.NR_MIESZKANIA = NR_MIESZKANIA;
+    public void setKod_pocztowy(String KOD_POCZTOWY) {
+        this.kod_pocztowy = KOD_POCZTOWY;
+    }
+
+    public String getUlica() {
+        return ulica;
+    }
+    public void setUlica(String ulica) {
+        this.ulica = ulica;
+    }
+
+    public String getNr_domu() {
+        return nr_domu;
+    }
+    public void setNr_domu(String nr_domu) {
+        this.nr_domu = nr_domu;
+    }
+
+    public Integer getNr_mieszkania() {
+        return nr_mieszkania;
+    }
+    public void setNr_mieszkania(Integer nr_mieszkania) {
+        this.nr_mieszkania = nr_mieszkania;
     }
 
     @Override
