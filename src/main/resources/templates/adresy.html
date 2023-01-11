@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Adresy</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
+</head>
+<body>
+
+<!-- Table -->
+<div align="center">
+    <table border="1" cellpadding="10">
+        <!-- Table header -->
+        <thead>
+        <tr> <!-- Table row -->
+            <th>Numer adresu</th>
+            <th>Kraj</th>
+            <th>Miasto</th>
+            <th>Kod pocztowy</th>
+            <th>Ulica</th>
+            <th>Numer domu</th>
+            <th>Numer mieszkania</th>
+        </tr>
+        </thead>
+        <!-- Table body -->
+        <tbody>
+        <tr th:each="sale : ${listAdresy}">
+            <td th:text="${adres.nr_adresu}">Numer adresu</td>
+            <td th:text="${adres.kraj}">Kraj</td>
+            <td th:text="${adres.miasto}">Miasto</td>
+            <td th:text="${adres.kod_pocztowy}">Kod pocztowy</td>
+            <td th:text="${adres.ulica}">Ulica</td>
+            <td th:text="${adres.nr_domu}">Numer domu</td>
+            <td th:text="${adres.nr_mieszkania}">Numer mieszkania</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
