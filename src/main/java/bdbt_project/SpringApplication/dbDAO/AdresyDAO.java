@@ -1,17 +1,18 @@
 package bdbt_project.SpringApplication.dbDAO;
 
-import bdbt_project.SpringApplication.dbtables.Adres;
+import bdbt_project.SpringApplication.dbtables.Adresy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
+@Transactional
 public class AdresyDAO {
-    /* Import org.springframework.jd....Template */
+
     @Autowired
     private final JdbcTemplate jdbcTemplate;
 
@@ -20,23 +21,23 @@ public class AdresyDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    /* Import java.util.List (zawiera info z bazy danych) */
-    public List<Adres> list(){
+    public List<Adresy> list(){
         String sql = "SELECT * FROM ADRESY";
+        var ans = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Adresy.class));
+        System.out.println(ans);
+        return ans;
+    }
 
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Adres.class));
+    public void save(Adresy adres) {
     }
-    /* Insert – wstawianie nowego wiersza do bazy */
-    public void save(Adres adres) {
-    }
-    /* Read – odczytywanie danych z bazy */
-    public Adres get(int nr_adresu) {
+
+    public Adresy get(int nr_adresu) {
         return null;
     }
-    /* Update – aktualizacja danych */
-    public void update(Adres adres) {
+
+    public void update(Adresy adres) {
     }
-    /* Delete – wybrany rekord z danym id */
+
     public void delete(int nr_adresu) {
     }
 

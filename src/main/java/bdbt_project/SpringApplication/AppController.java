@@ -1,6 +1,10 @@
 package bdbt_project.SpringApplication;
 
+import bdbt_project.SpringApplication.dbDAO.AdresyDAO;
+import bdbt_project.SpringApplication.dbtables.Adresy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,9 +12,15 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Configuration
+@Controller
 public class AppController implements WebMvcConfigurer {
+
+    @Autowired
+    private final AdresyDAO adresyDAO = new AdresyDAO(new JdbcTemplate());
+
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
         registry.addViewController("/").setViewName("index");
@@ -18,6 +28,7 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/main_admin").setViewName("admin/main_admin");
         registry.addViewController("/main_user").setViewName("user/main_user");
+        registry.addViewController("/adresy").setViewName("adresy");
     }
 
     @Controller
@@ -32,6 +43,14 @@ public class AppController implements WebMvcConfigurer {
                 return "redirect:/index";
             }
         }
+
+    }
+
+    @RequestMapping("/adresy")
+    public String showAdresyPage(Model model) {
+        List<Adresy> listAdresy = adresyDAO.list();
+        model.addAttribute("listAdresy", listAdresy);
+        return "adresy";
     }
 
     @RequestMapping(value = {"/main_admin"})

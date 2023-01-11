@@ -7,6 +7,36 @@
 
 </head>
 <body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">BDBT Spring Boot Project - Part II</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/main}">Main</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/main}">Login</a></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <!-- Table -->
 <div align="center">
@@ -25,14 +55,14 @@
         </thead>
         <!-- Table body -->
         <tbody>
-        <tr th:each="sale : ${listAdresy}">
-            <td th:text="${adres.nr_adresu}">Numer adresu</td>
-            <td th:text="${adres.kraj}">Kraj</td>
-            <td th:text="${adres.miasto}">Miasto</td>
-            <td th:text="${adres.kod_pocztowy}">Kod pocztowy</td>
-            <td th:text="${adres.ulica}">Ulica</td>
-            <td th:text="${adres.nr_domu}">Numer domu</td>
-            <td th:text="${adres.nr_mieszkania}">Numer mieszkania</td>
+        <tr th:each="adres : ${listAdresy}">
+            <td th:text="${adres.NR_ADRESU}">Numer adresu</td>
+            <td th:text="${adres.KRAJ}">Kraj</td>
+            <td th:text="${adres.MIASTO}">Miasto</td>
+            <td th:text="${adres.KOD_POCZTOWY}">Kod pocztowy</td>
+            <td th:text="${adres.ULICA}">Ulica</td>
+            <td th:text="${adres.NR_DOMU}">Numer domu</td>
+            <td th:text="${adres.NR_MIESZKANIA}">Numer mieszkania</td>
         </tr>
         </tbody>
     </table>
