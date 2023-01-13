@@ -51,8 +51,8 @@ public class Adresy {
     public String getKod_pocztowy() {
         return kod_pocztowy;
     }
-    public void setKod_pocztowy(String KOD_POCZTOWY) {
-        this.kod_pocztowy = KOD_POCZTOWY;
+    public void setKod_pocztowy(String kod_pocztowy) {
+        this.kod_pocztowy = kod_pocztowy;
     }
 
     public String getUlica() {
