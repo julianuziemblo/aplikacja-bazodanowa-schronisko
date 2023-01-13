@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Configuration
-@Controller
 public class AppController implements WebMvcConfigurer {
 
     @Autowired
