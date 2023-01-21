@@ -18,7 +18,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home
                         <span class="sr-only">(current)</span>
@@ -38,6 +37,8 @@
     </div>
 </nav>
 
+<br/>
+<br/>
 <!-- Table -->
 <div align="center">
     <table border="1" cellpadding="10">
@@ -55,7 +56,7 @@
         </thead>
         <!-- Table body -->
         <tbody>
-        <tr th:each="adres : ${listAdresy}">
+        <tr th:each="adres : ${listAdres}">
             <td th:text="${adres.nr_adresu}">Numer adresu</td>
             <td th:text="${adres.kraj}">Kraj</td>
             <td th:text="${adres.miasto}">Miasto</td>

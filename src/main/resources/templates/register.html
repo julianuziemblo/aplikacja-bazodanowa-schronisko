@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Zarejestruj się</title>
+
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">BDBT Spring Boot Project - Part II</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/index}">Home</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Zarejestruj się
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container" align="center">
+    <!-- Page header -->
+    <h1>Zarejestruj się</h1>
+
+    <br/>
+    <h2>Dane osobowe</h2>
+    <form action="#" th:action="@{/save}" th:object="${klientDTO}" method="post">
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Imię <span style="color:crimson">*</span></td>
+                <td><input type="text" th:field="*{imie}"/></td>
+            </tr>
+            <tr>
+                <td>Nazwisko <span style="color:crimson">*</span></td>
+                <td><input type="text" th:field="*{nazwisko}"/></td>
+            </tr>
+            <tr>
+                <td>E-mail <span style="color:crimson">*</span></td>
+                <td><input type="text" th:field="*{email}"/></td>
+            </tr>
+            <tr>
+                <td>Data urodzenia <span style="color:crimson">*</span></td>
+                <td><input type="date" value="today" th:field="*{data_urodzenia}"/></td>
+            </tr>
+            <tr>
+                <td>Płeć <span style="color:crimson">*</span></td>
+                <td>
+                    <fieldset id="plec" th:field="*{plec}">
+                        <input type="radio" value="K" id="K" name="plec"/>
+                        <label for="K">Kobieta</label>
+                        <input type="radio" value="M" id="M" name="plec"/>
+                        <label for="M">Mężczyzna</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td>Numer telefonu</td>
+                <td><input type="tel" th:field="*{nr_telefonu}"/></td>
+            </tr>
+            <tr>
+                <td>Hasło <span style="color:crimson">*</span></td>
+                <td><input type="password" th:field="*{haslo}"/></td>
+            </tr>
+            <tr>
+                <td>Potwierdź hasło <span style="color:crimson">*</span></td>
+                <td><input type="password" th:field="*{potwierdzHaslo}"/></td>
+            </tr>
+        </table>
+    </form>
+    <h2>Adres</h2>
+    <form action="#" th:action="@{/save}" th:object="${adresyDAO}" method="post">
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Kraj <span style="color:crimson">*</span></td>
+                <td><input type="text" th:field="*{kraj}"></td>
+            </tr>
+            <tr>
+                <td>Miasto <span style="color:crimson">*</span></td>
+                <td><input type="text" th:field="*{miasto}"></td>
+            </tr>
+            <tr>
+                <td>Ulica <span style="color:crimson">*</span></td>
+                <td><input type="text" th:field="*{ulica}"></td>
+            </tr>
+            <tr>
+                <td>Numer domu <span style="color:crimson">*</span></td>
+                <td><input type="text" th:field="*{nr_domu}"></td>
+            </tr>
+            <tr>
+                <td>Numer mieszkania</td>
+                <td><input type="text" th:field="*{nr_mieszkania}"></td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

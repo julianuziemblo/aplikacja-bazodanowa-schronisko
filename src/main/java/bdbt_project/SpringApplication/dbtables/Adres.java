@@ -1,7 +1,7 @@
 package bdbt_project.SpringApplication.dbtables;
 
 
-public class Adresy {
+public class Adres {
     private int nr_adresu;
     private String kraj;
     private String miasto;
@@ -10,14 +10,14 @@ public class Adresy {
     private String nr_domu;
     private Integer nr_mieszkania;
 
-    public Adresy(){
+    public Adres(){
 
     }
 
-    public Adresy(Integer nr_adresu, String kraj,
-                  String miasto, String kod_pocztowy,
-                  String ulica, String nr_domu,
-                  Integer nr_mieszkania) {
+    public Adres(Integer nr_adresu, String kraj,
+                 String miasto, String kod_pocztowy,
+                 String ulica, String nr_domu,
+                 Integer nr_mieszkania) {
         this.nr_adresu = nr_adresu;
         this.kraj = kraj;
         this.miasto = miasto;

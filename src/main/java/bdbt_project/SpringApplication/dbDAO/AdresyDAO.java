@@ -1,6 +1,6 @@
 package bdbt_project.SpringApplication.dbDAO;
 
-import bdbt_project.SpringApplication.dbtables.Adresy;
+import bdbt_project.SpringApplication.dbtables.Adres;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,19 +21,20 @@ public class AdresyDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Adresy> list(){
+    public List<Adres> list(){
         String sql = "SELECT * FROM ADRESY";
-        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Adresy.class));
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Adres.class));
     }
 
-    public void save(Adresy adres) {
+    public void save(Adres adres) {
     }
 
-    public Adresy get(int nr_adresu) {
-        return null;
+    public Adres get(int nr_adresu) {
+        var sql = "SELECT * FROM ADRESY WHERE NR_KLIENTA="+nr_adresu;
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Adres.class));
     }
 
-    public void update(Adresy adres) {
+    public void update(Adres adres) {
     }
 
     public void delete(int nr_adresu) {
