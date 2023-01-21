@@ -27,10 +27,10 @@ public class Adres {
         this.nr_mieszkania = nr_mieszkania;
     }
 
-    public Integer getNr_adresu() {
+    public int getNr_adresu() {
         return nr_adresu;
     }
-    public void setNr_adresu(Integer nr_adresu) {
+    public void setNr_adresu(int nr_adresu) {
         this.nr_adresu = nr_adresu;
     }
 

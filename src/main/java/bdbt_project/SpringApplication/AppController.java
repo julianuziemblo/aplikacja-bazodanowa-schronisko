@@ -1,20 +1,24 @@
 package bdbt_project.SpringApplication;
 
-import bdbt_project.SpringApplication.dbDAO.AdresyDAO;
+import bdbt_project.SpringApplication.dbDAO.AdresDAO;
+import bdbt_project.SpringApplication.dbDAO.KlientDAO;
+import bdbt_project.SpringApplication.dbDAO.KlientHasloDAO;
 import bdbt_project.SpringApplication.dbtables.Adres;
-import bdbt_project.SpringApplication.dto.KlientDTO;
+import bdbt_project.SpringApplication.dbtables.Klient;
+import bdbt_project.SpringApplication.dto.KlientHaslo;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Configuration
@@ -22,7 +26,12 @@ import java.util.List;
 public class AppController implements WebMvcConfigurer {
 
     @Autowired
-    private final AdresyDAO adresyDAO = new AdresyDAO(new JdbcTemplate());
+    private final AdresDAO adresDAO = new AdresDAO(new JdbcTemplate());
+
+    @Autowired
+    private final KlientDAO klientDAO = new KlientDAO(new JdbcTemplate());
+
+    private final KlientHasloDAO klientHasloDAO = new KlientHasloDAO();
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -32,40 +41,62 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/main_admin").setViewName("admin/main_admin");
         registry.addViewController("/main_user").setViewName("user/main_user");
         registry.addViewController("/adresy").setViewName("adresy");
+        registry.addViewController("/register").setViewName("register");
+        registry.addViewController("/navbar").setViewName("navbar");
     }
 
     @Controller
     public class DashboardController {
         @RequestMapping("/main")
         public String defaultAfterLogin(HttpServletRequest request) {
-            var userRole = request.getRemoteUser().toUpperCase();
-            var userRolesRedirect = Application.getRolesRedirect();
+            var userRole = request.getRemoteUser();
+            var userRolesRedirect = Application.getUserRedirect();
             return userRolesRedirect.getOrDefault(userRole, "redirect:/index");
         }
     }
 
     @RequestMapping("/adresy")
     public String showAdresyPage(Model model) {
-        List<Adres> listAdres = adresyDAO.list();
+        List<Adres> listAdres = adresDAO.list();
         model.addAttribute("listAdres", listAdres);
         return "adresy";
     }
 
-    @RequestMapping(value = {"/main_admin"})
+    @RequestMapping(value={"/main_admin"})
     public String showAdminPage(Model model) {
         return "admin/main_admin";
     }
 
-    @RequestMapping(value = {"/main_user"})
+    @RequestMapping(value={"/main_user"})
     public String showUserPage(Model model) {
         return "user/main_user";
     }
 
-    @RequestMapping("/registration")
-    public String showRegistrationForm(WebRequest request, Model model) {
-        KlientDTO klientDTO = new KlientDTO();
-        model.addAttribute("klient", klientDTO);
-        return "registration";
+    @RequestMapping(value={"/register"})
+    public String showRegisterForm(Model model) {
+        var klient = new Klient();
+        var klientHaslo = new KlientHaslo();
+        var adres = new Adres();
+        model.addAttribute("klientDAO", klient);
+        model.addAttribute("klientHaslo", klientHaslo);
+        model.addAttribute("adresDAO", adres);
+        return "register";
+    }
+
+    @RequestMapping(value="/save_klient_data", method=RequestMethod.POST)
+    public String saveKlientData(@ModelAttribute("klientDAO") Klient klient,
+                                 @ModelAttribute("adresDAO") Adres adres,
+                                 @ModelAttribute("klientHaslo") KlientHaslo kh) throws IOException, ParseException {
+        // TODO: VALIDATE INPUTS, REDIRECT TO ERROR PAGE IF NECESSARY
+        adresDAO.save(adres);
+        var top_adres = adresDAO.getHighestIdAddress();
+        var nr_adresu = top_adres.getNr_adresu();
+        klient.setNr_adresu(nr_adresu);
+        klientDAO.save(klient);
+        var email = klient.getEmail();
+        kh.setUsername(email);
+        klientHasloDAO.save(kh);
+        return "redirect:/main_user";
     }
 
 }

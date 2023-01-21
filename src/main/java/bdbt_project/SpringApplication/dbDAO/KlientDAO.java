@@ -5,6 +5,8 @@ import bdbt_project.SpringApplication.utility.SQLInputChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +14,12 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class KlienciDAO {
+public class KlientDAO {
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
 
-    public KlienciDAO(JdbcTemplate jdbcTemplate) {
+    public KlientDAO(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -44,14 +46,10 @@ public class KlienciDAO {
     }
 
     public void save(Klient k) {
-        var sql = "INSERT INTO KLIENCI(nr_klienta, imie, " +
-                "nazwisko, data_urodzenia, pesel, plec, " +
-                "email, nr_telefonu, nr_adresu, nr_schroniska) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?)";
-        jdbcTemplate.update(sql, k.getNr_klienta(), k.getImie(),
-                k.getNazwisko(), k.getData_urodzenia(), k.getPesel(),
-                k.getPlec(), k.getEmail(), k.getNr_telefonu(), k.getNr_adresu(),
-                k.getNr_schroniska());
+        var insert = new SimpleJdbcInsert(jdbcTemplate);
+        insert.withTableName("klienci").usingColumns("nr_klienta", "imie", "nazwisko", "data_urodzenia", "pesel", "plec", "email", "nr_telefonu", "nr_adresu", "nr_schroniska");
+        var param = new BeanPropertySqlParameterSource(k);
+        insert.execute(param);
     }
 
 }

@@ -1,23 +1,23 @@
 package bdbt_project.SpringApplication;
 
 import bdbt_project.SpringApplication.utility.JSONUtility;
-import org.json.simple.JSONObject;
+
 import org.json.simple.parser.ParseException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.util.HashMap;
-import org.json.simple.parser.JSONParser;
+
 
 
 @SpringBootApplication
 public class Application {
 	private static HashMap<Integer, String> errorCodes;
-	private static HashMap<String, String> rolesRedirect;
+	private static HashMap<String, String> userRedirect;
 	private static HashMap<String, String> users;
-	private static final String userAuthPath = "resources/authentication/users.json";
+	public static final String userAuthPath = "src/main/resources/authentication/users.json";
 
 	public static void main(String[] args) {
 		setup();
@@ -25,9 +25,13 @@ public class Application {
 	}
 
 	private static void setup() {
-		setupErrorCodes();
-		setupRolesRedirect();
-		loadUserAuthentication();
+		try {
+			loadUserAuthentication();
+			setupRolesRedirect();
+			setupErrorCodes();
+		} catch(IOException | ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void setupErrorCodes() {
@@ -39,27 +43,24 @@ public class Application {
 	}
 
 	private static void setupRolesRedirect() {
-		rolesRedirect = new HashMap<>();
-		rolesRedirect.put("ADMIN", "redirect:/main_admin");
-		rolesRedirect.put("USER", "redirect:/main_user");
-	}
-
-	private static void loadUserAuthentication() {
-		var parser = new JSONParser();
-		try {
-			var auth = (JSONObject)parser.parse(new FileReader(userAuthPath));
-			users = JSONUtility.toMap(auth);
-		} catch(IOException | ParseException e) {
-			e.printStackTrace();
+		userRedirect = new HashMap<>();
+		userRedirect.put("admin", "redirect:/main_admin");
+		userRedirect.put("user", "redirect:/main_user");
+		var usernames = users.keySet();
+		for(var user: usernames) {
+			userRedirect.put(user, "redirect:/main_user");
 		}
 	}
 
+	private static void loadUserAuthentication() throws IOException, ParseException {
+		users = JSONUtility.read(userAuthPath);
+	}
 
 	public static HashMap<Integer, String> getErrorCodes() {
 		return errorCodes;
 	}
-	public static HashMap<String, String> getRolesRedirect() {
-		return rolesRedirect;
+	public static HashMap<String, String> getUserRedirect() {
+		return userRedirect;
 	}
 	public static HashMap<String, String> getUsers() {
 		return users;

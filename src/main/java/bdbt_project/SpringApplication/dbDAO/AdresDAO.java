@@ -11,12 +11,12 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class AdresyDAO {
+public class AdresDAO {
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
 
-    public AdresyDAO(JdbcTemplate jdbcTemplate) {
+    public AdresDAO(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -24,6 +24,11 @@ public class AdresyDAO {
     public List<Adres> list(){
         String sql = "SELECT * FROM ADRESY";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Adres.class));
+    }
+
+    public Adres getHighestIdAddress() {
+        String sql = "SELECT nr_adresu FROM ADRESY ORDER BY nr_adresu DESC FETCH NEXT 1 ROWS ONLY";
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Adres.class));
     }
 
     public void save(Adres adres) {

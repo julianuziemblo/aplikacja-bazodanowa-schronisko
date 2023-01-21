@@ -15,6 +15,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        var users = Application.getUsers();
+        for(var username: users.keySet()){
+            var password = users.get(username);
+            auth.inMemoryAuthentication()
+                    .withUser(username)
+                    .password(password)
+                    .roles("USER");
+        }
         auth.inMemoryAuthentication()
                 .withUser("user")
                 .password("user")
@@ -23,11 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("admin")
                 .password("admin")
                 .roles("ADMIN");
-
-        var users = Application.getUsers();
-        for(var user: users.keySet()){
-            auth.inMemoryAuthentication().withUser(user).password(users.get(user)).roles("USER");
-        }
     }
 
     @Bean
