@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    public static AuthenticationManagerBuilder auth;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         var users = Application.getUsers();
@@ -31,6 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("admin")
                 .password("admin")
                 .roles("ADMIN");
+        SecurityConfiguration.auth = auth;
     }
 
     @Bean
@@ -57,4 +60,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/index")
                 .permitAll();
     }
+
+
 }

@@ -6,10 +6,13 @@ import bdbt_project.SpringApplication.dbDAO.KlientHasloDAO;
 import bdbt_project.SpringApplication.dbtables.Adres;
 import bdbt_project.SpringApplication.dbtables.Klient;
 import bdbt_project.SpringApplication.dto.KlientHaslo;
+
 import org.json.simple.parser.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
@@ -86,15 +90,13 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value="/save_klient_data", method=RequestMethod.POST)
     public String saveKlientData(@ModelAttribute("klientDAO") Klient klient,
                                  @ModelAttribute("adresDAO") Adres adres,
-                                 @ModelAttribute("klientHaslo") KlientHaslo kh) throws IOException, ParseException {
+                                 @ModelAttribute("klientHaslo") KlientHaslo kh) throws Exception {
         // TODO: VALIDATE INPUTS, REDIRECT TO ERROR PAGE IF NECESSARY
         adresDAO.save(adres);
         var top_adres = adresDAO.getHighestIdAddress();
         var nr_adresu = top_adres.getNr_adresu();
         klient.setNr_adresu(nr_adresu);
         klientDAO.save(klient);
-        var email = klient.getEmail();
-        kh.setUsername(email);
         klientHasloDAO.save(kh);
         return "redirect:/main_user";
     }

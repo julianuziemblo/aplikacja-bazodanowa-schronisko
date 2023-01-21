@@ -22,6 +22,9 @@ public class JSONUtility {
     }
 
     public static HashMap<String, String> read(String path) throws IOException, ParseException {
+        if(FileUtility.isBlank(path)) {
+            JSONUtility.writeEmptyMap(path);
+        }
         var parser = new JSONParser();
         var auth = (JSONObject)parser.parse(new FileReader(path));
         return JSONUtility.toMap(auth);
