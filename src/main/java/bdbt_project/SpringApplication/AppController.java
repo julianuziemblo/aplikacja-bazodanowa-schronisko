@@ -2,17 +2,14 @@ package bdbt_project.SpringApplication;
 
 import bdbt_project.SpringApplication.dbDAO.AdresDAO;
 import bdbt_project.SpringApplication.dbDAO.KlientDAO;
-import bdbt_project.SpringApplication.dbDAO.KlientHasloDAO;
+import bdbt_project.SpringApplication.dbDAO.KlientUsernameEmailPasswordDAO;
 import bdbt_project.SpringApplication.dbtables.Adres;
 import bdbt_project.SpringApplication.dbtables.Klient;
-import bdbt_project.SpringApplication.dto.KlientHaslo;
-
-import org.json.simple.parser.ParseException;
+import bdbt_project.SpringApplication.dto.KlientUsernameEmailPassword;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +19,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 @Configuration
@@ -35,7 +31,7 @@ public class AppController implements WebMvcConfigurer {
     @Autowired
     private final KlientDAO klientDAO = new KlientDAO(new JdbcTemplate());
 
-    private final KlientHasloDAO klientHasloDAO = new KlientHasloDAO();
+    private final KlientUsernameEmailPasswordDAO klientUsernameEmailPasswordDAO = new KlientUsernameEmailPasswordDAO();
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -79,7 +75,7 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value={"/register"})
     public String showRegisterForm(Model model) {
         var klient = new Klient();
-        var klientHaslo = new KlientHaslo();
+        var klientHaslo = new KlientUsernameEmailPassword();
         var adres = new Adres();
         model.addAttribute("klientDAO", klient);
         model.addAttribute("klientHaslo", klientHaslo);
@@ -90,14 +86,15 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value="/save_klient_data", method=RequestMethod.POST)
     public String saveKlientData(@ModelAttribute("klientDAO") Klient klient,
                                  @ModelAttribute("adresDAO") Adres adres,
-                                 @ModelAttribute("klientHaslo") KlientHaslo kh) throws Exception {
+                                 @ModelAttribute("klientHaslo") KlientUsernameEmailPassword kh) throws Exception {
         // TODO: VALIDATE INPUTS, REDIRECT TO ERROR PAGE IF NECESSARY
         adresDAO.save(adres);
-        var top_adres = adresDAO.getHighestIdAddress();
-        var nr_adresu = top_adres.getNr_adresu();
+        var nr_adresu = adresDAO.getHighestIdAddress().getNr_adresu();
         klient.setNr_adresu(nr_adresu);
+        var email = klient.getEmail();
+        kh.setEmail(email);
         klientDAO.save(klient);
-        klientHasloDAO.save(kh);
+        klientUsernameEmailPasswordDAO.save(kh);
         return "redirect:/main_user";
     }
 
