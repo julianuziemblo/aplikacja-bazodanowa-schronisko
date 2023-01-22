@@ -25,18 +25,17 @@ function validate(event) {
     const input = new Map();
     input.set("Imie", document.getElementById("imie").value);
     input.set("Nazwisko", document.getElementById("nazwisko").value);
-    input.set("Data urodzenia", document.getElementById("data_urodzenia").value);
+    input.set("Data_urodzenia", document.getElementById("data_urodzenia").value);
     input.set("Plec", getPlecValue());
-    input.set("Numer telefonu", document.getElementById("nr_telefonu").value);
+    input.set("Numer_telefonu", document.getElementById("nr_telefonu").value);
     input.set("PESEL", document.getElementById("pesel").value);
     input.set("Haslo", document.getElementById("password").value);
-    input.set("Potwierdz haslo", document.getElementById("confirmPassword").value);
+    input.set("Potwierdz_haslo", document.getElementById("confirmPassword").value);
     input.set("Kraj", document.getElementById("kraj").value);
     input.set("Miasto", document.getElementById("miasto").value);
-    input.set("Kod pocztowy", document.getElementById("kod_pocztowy").value);
+    input.set("Kod_pocztowy", document.getElementById("kod_pocztowy").value);
     input.set("Ulica", document.getElementById("ulica").value);
-    input.set("Numer domu", document.getElementById("nr_domu").value);
-    input.set("Numer mieszkania", document.getElementById("nr_mieszkania").value);
+    input.set("Numer_domu", document.getElementById("nr_domu").value);
 
     for(const key of input.keys()) {
         if(input.get(key) == "") {
@@ -48,12 +47,25 @@ function validate(event) {
             return false;
         }
     }
-    if(input.get("Haslo") != input.get("Potwierdz haslo")) {
+    if(input.get("Imie").length > 20) {
+        window.alert("Błąd: pole Imie nie może przekraczać 20 znaków!");
+        return false;
+    }
+    if(input.get("Nazwisko").length > 30) {
+        window.alert("Błąd: pole Nazwisko nie może przekraczać 30 znaków!");
+        return false;
+    }
+    if(input.get("PESEL").length != 11) {
+          window.alert("Błąd: pole Pesel musi mieć dokładnie 11 znaków!");
+          return false;
+      }
+    if(input.get("Haslo") != input.get("Potwierdz_haslo")) {
         window.alert("Błąd: hasła muszą być takie same!");
+        console.log(input.get("Haslo") + " " + input.get("Potwierdz haslo"));
         return false;
     }
     console.log("Validation clear");
-    // document.getElementById('form').submit();
+    document.getElementById('form').submit();
     return true;
 }
 

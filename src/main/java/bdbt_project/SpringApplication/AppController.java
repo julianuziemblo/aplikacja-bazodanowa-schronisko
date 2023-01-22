@@ -2,10 +2,10 @@ package bdbt_project.SpringApplication;
 
 import bdbt_project.SpringApplication.dbDAO.AdresDAO;
 import bdbt_project.SpringApplication.dbDAO.KlientDAO;
-import bdbt_project.SpringApplication.dbDAO.KlientUsernameEmailPasswordDAO;
+import bdbt_project.SpringApplication.dbDAO.KlientPasswordDAO;
 import bdbt_project.SpringApplication.dbtables.Adres;
 import bdbt_project.SpringApplication.dbtables.Klient;
-import bdbt_project.SpringApplication.dto.KlientUsernameEmailPassword;
+import bdbt_project.SpringApplication.dto.KlientPassword;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +31,7 @@ public class AppController implements WebMvcConfigurer {
     @Autowired
     private final KlientDAO klientDAO = new KlientDAO(new JdbcTemplate());
 
-    private final KlientUsernameEmailPasswordDAO klientUsernameEmailPasswordDAO = new KlientUsernameEmailPasswordDAO();
+    private final KlientPasswordDAO klientPasswordDAO = new KlientPasswordDAO();
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -75,7 +75,7 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value={"/register"})
     public String showRegisterForm(Model model) {
         var klient = new Klient();
-        var klientHaslo = new KlientUsernameEmailPassword();
+        var klientHaslo = new KlientPassword();
         var adres = new Adres();
         model.addAttribute("klientDAO", klient);
         model.addAttribute("klientHaslo", klientHaslo);
@@ -86,7 +86,7 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value="/save_klient_data", method=RequestMethod.POST)
     public String saveKlientData(@ModelAttribute("klientDAO") Klient klient,
                                  @ModelAttribute("adresDAO") Adres adres,
-                                 @ModelAttribute("klientHaslo") KlientUsernameEmailPassword kh) throws Exception {
+                                 @ModelAttribute("klientHaslo") KlientPassword kh) throws Exception {
         // TODO: VALIDATE INPUTS, REDIRECT TO ERROR PAGE IF NECESSARY
         adresDAO.save(adres);
         var nr_adresu = adresDAO.getHighestIdAddress().getNr_adresu();
@@ -94,7 +94,7 @@ public class AppController implements WebMvcConfigurer {
         var email = klient.getEmail();
         kh.setEmail(email);
         klientDAO.save(klient);
-        klientUsernameEmailPasswordDAO.save(kh);
+        klientPasswordDAO.save(kh);
         return "redirect:/main_user";
     }
 

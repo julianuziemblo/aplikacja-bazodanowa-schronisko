@@ -1,6 +1,6 @@
 package bdbt_project.SpringApplication.utility;
 
-import bdbt_project.SpringApplication.dto.KlientUsernameEmailPassword;
+import bdbt_project.SpringApplication.dto.KlientPassword;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,13 +30,13 @@ public class JSONUtility {
         return JSONUtility.toMap(auth);
     }
 
-    public static void write(KlientUsernameEmailPassword kh, String path) throws IOException, ParseException {
+    public static void write(KlientPassword kh, String path) throws IOException, ParseException {
         if(FileUtility.isBlank(path)) {
             JSONUtility.writeEmptyMap(path);
         }
         var auth = (JSONObject)parser.parse(new FileReader(path));
         var map = JSONUtility.toMap(auth);
-        map.put(kh.getUsername(), kh.getPassword());
+        map.put(kh.getEmail(), kh.getPassword());
         var row = new JSONObject(map);
         var writer = new BufferedWriter(new FileWriter(path));
         writer.write(row.toString());

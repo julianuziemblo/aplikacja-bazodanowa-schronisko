@@ -1,28 +1,18 @@
 package bdbt_project.SpringApplication.dto;
 
-public class KlientUsernameEmailPassword {
+public class KlientPassword {
 
     private String password;
     private String confirmPassword;
-    private String username;
     private String email;
 
-    public KlientUsernameEmailPassword() {
+    public KlientPassword() {
     }
 
-    public KlientUsernameEmailPassword(String username, String email, String password, String confirmPassword) {
-        this.username = username;
+    public KlientPassword(String email, String password, String confirmPassword) {
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -51,10 +41,9 @@ public class KlientUsernameEmailPassword {
 
     @Override
     public String toString() {
-        return "KlientUsernameEmailPassword{" +
+        return "KlientPassword{" +
                 "password='" + password + '\'' +
                 ", confirmPassword='" + confirmPassword + '\'' +
-                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

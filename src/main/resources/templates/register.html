@@ -28,11 +28,11 @@
         <table border="0" cellpadding="10">
             <tr>
                 <td>Imię <span style="color:crimson">*</span></td>
-                <td><input id="imie" type="text" pattern="[^0-9]{1-20}" th:field="*{imie}" aria-required="true" /></td>
+                <td><input id="imie" type="text" pattern="[^0-9]" th:field="*{imie}" aria-required="true" /></td>
             </tr>
             <tr>
                 <td>Nazwisko <span style="color:crimson">*</span></td>
-                <td><input id="nazwisko" type="text" pattern="[^0-9]{1-30}" title="Do 30 znaków" th:field="*{nazwisko}" aria-required="true"/></td>
+                <td><input id="nazwisko" type="text" pattern="[^0-9]" title="Do 30 znaków" th:field="*{nazwisko}" aria-required="true"/></td>
             </tr>
             <tr>
                 <td>Data urodzenia <span style="color:crimson">*</span></td>
@@ -59,7 +59,7 @@
             </tr>
             <tr>
                 <td>Pesel <span style="color:crimson">*</span></td>
-                <td><input id="pesel" type="text" pattern="[0-9]{12}" th:field="*{pesel}" aria-required="false"/></td>
+                <td><input id="pesel" type="text" pattern="[0-9]" th:field="*{pesel}" aria-required="false"/></td>
             </tr>
         </table>
     </div>
@@ -88,7 +88,7 @@
             </tr>
             <tr>
                 <td>Kod pocztowy<span style="color:crimson">*</span></td>
-                <td><input id="kod_pocztowy" type="text" pattern="[0-9]{2}-[0-9]{3}" title="xx-xxx" th:field="*{kod_pocztowy}" aria-required="true"></td>
+                <td><input id="kod_pocztowy" type="text" pattern="[0-9]-[0-9]" title="xx-xxx" th:field="*{kod_pocztowy}" aria-required="true"></td>
             </tr>
             <tr>
                 <td>Ulica <span style="color:crimson">*</span></td>
