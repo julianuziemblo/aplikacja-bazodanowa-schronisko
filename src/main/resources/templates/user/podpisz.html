@@ -8,13 +8,8 @@
 </head>
 <body>
 <!-- Navigation -->
-<div id="nav-placeholder">
-<script>
-    $(function(){
-      $("#nav-placeholder").load("navbar-logged-user");
-    });
-</script>
-</div>
+<header th:insert="fragments/navbars.html :: navbar-logged-user" ></header>
+
 
 <br/>
 <div class="container">
