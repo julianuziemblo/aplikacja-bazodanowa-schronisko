@@ -25,9 +25,17 @@
                     <a class="nav-link" style="color:lightskyblue">Zalogowano jako: [[${#httpServletRequest.remoteUser}]]   </a>
                 </li>
                 <li>
-                    <button class="btn btn-primary" type="submit" onclick="a = createElement('a'); a.href='/index'; a.click()" value="Sign Out">Wyloguj</button>
+                    <form method="post" th:action="@{/index}">
+                        <input type="hidden" name="_csrf" value="07b8ec05-fe21-4819-80b1-2ad57ae9450e"/>
+                        <input type="submit" class="btn btn-primary" value="Wyloguj" />
+                    </form>
+                    <script th:src="@{/js/script.js}"></script>
+                    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+                    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+                    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
                 </li>
             </ul>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </nav>

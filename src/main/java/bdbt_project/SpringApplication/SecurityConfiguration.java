@@ -24,6 +24,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .roles("USER");
         }
         auth.inMemoryAuthentication()
+                .withUser("albertologuapo@gmail.com")
+                .password("employee")
+                .roles("EMPLOYEE")
+                .and()
                 .withUser("admin")
                 .password("admin")
                 .roles("ADMIN");
@@ -43,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/main_admin").access("hasRole('ADMIN')")
                 .antMatchers("/main_user").access("hasRole('USER')")
                 .antMatchers("/umowy").access("hasRole('USER')")
+                .antMatchers("/user/podpisz").access("hasRole('USER')")
                 .and()
                 .formLogin()
                 .loginPage("/login")

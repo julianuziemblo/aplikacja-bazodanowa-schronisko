@@ -11,16 +11,18 @@
 <div id="nav-placeholder">
 <script>
     $(function(){
-      $("#nav-placeholder").load("navbar");
+      $("#nav-placeholder").load("navbar-logged-user");
     });
 </script>
 </div>
 
 <!--<p align="center">To są user/umowy</p>-->
-
+<br/>
+<br/>
 
 <div align="center">
     <h2>Moje umowy</h2>
+    <br/>
     <table border="1" cellpadding="10">
         <!-- Table header -->
         <thead>
@@ -29,20 +31,27 @@
             <th>Rodzaj umowy</th>
             <th>Data podpisu</th>
             <th>Data ważności</th>
+            <th>Pracownik nadzorujący</th>
         </tr>
         </thead>
         <!-- Table body -->
         <tbody>
-        <tr th:each="zw : ${zwierzeta}">
-            <td th:text="${zw.imie}">Imię</td>
-        </tr>
-        <tr th:each="u : ${umowy}">
-            <td th:text="${u.rodzaj}">Rodzaj umowy</td>
-            <td th:text="${u.data_podpisu}">Data podpisu</td>
-            <td th:text="${u.data_waznosci}">Data ważności</td>
-        </tr>
+            <tr th:each="zw : ${zwierzeta}">
+                <td th:text="${zw.imie}">Imię</td>
+            </tr>
+            <tr th:each="u : ${umowy}">
+                <td th:text="${u.rodzaj}">Rodzaj umowy</td>
+                <td th:text="${u.data_podpisu}">Data podpisu</td>
+                <td th:text="${u.data_waznosci}">Data ważności</td>
+            </tr>
+            <tr th:each="pc : ${pracownicyConcat}">
+                <td th:text="${pc.imie_nazwisko}">Pracownik nadzorujący</td>
+            </tr>
         </tbody>
     </table>
+    <br/>
+    <br/>
+    <a href="/zwierzeta" type="button" class="btn btn-primary">Adoptuj pupila</a>
 </div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>

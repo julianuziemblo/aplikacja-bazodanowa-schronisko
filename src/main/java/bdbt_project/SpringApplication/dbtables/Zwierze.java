@@ -1,5 +1,7 @@
 package bdbt_project.SpringApplication.dbtables;
 
+import java.util.Objects;
+
 public class Zwierze {
 
     private int nr_zwerzecia;
@@ -66,24 +68,37 @@ public class Zwierze {
     }
 
     public String getRasa() {
-        return rasa;
+        return Objects.requireNonNullElse(this.rasa, "Nieznana");
     }
 
     public void setRasa(String rasa) {
         this.rasa = rasa;
     }
 
-    public char getPlec() {
-        return plec;
+    public String getPlec() {
+        String sex;
+        if(this.plec == 'M') {
+            sex = "Samiec";
+        } else {
+            sex = "Samica";
+        }
+        return sex;
     }
 
     public void setPlec(char plec) {
         this.plec = plec;
     }
 
-    public char getRozmiar() {
-        // TODO: WYRZUCAC AKTUALN ROZMIAR!
-        return rozmiar;
+    public String getRozmiar() {
+        String size;
+        if(this.rozmiar == 'S') {
+            size = "Mały";
+        } else if(this.rozmiar == 'M') {
+            size = "Średni";
+        } else {
+            size = "Duży";
+        }
+        return size;
     }
 
     public void setRozmiar(char rozmiar) {

@@ -3,10 +3,12 @@ package bdbt_project.SpringApplication;
 import bdbt_project.SpringApplication.dbDAO.*;
 import bdbt_project.SpringApplication.dbtables.Adres;
 import bdbt_project.SpringApplication.dbtables.Klient;
+import bdbt_project.SpringApplication.dbtables.Pracownik;
 import bdbt_project.SpringApplication.dbtables.Zwierze;
 import bdbt_project.SpringApplication.dto.KlientPassword;
 
 import bdbt_project.SpringApplication.filters.GatunekFilter;
+import bdbt_project.SpringApplication.utility.RandomUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,9 +24,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +43,9 @@ public class AppController implements WebMvcConfigurer {
     @Autowired
     private final ZwierzeDAO zwierzeDAO = new ZwierzeDAO(new JdbcTemplate());
 
+    @Autowired
+    private final PracownikDAO pracownikDAO = new PracownikDAO(new JdbcTemplate());
+
     private final KlientPasswordDAO klientPasswordDAO = new KlientPasswordDAO();
 
     private Integer currentAnimal = null;
@@ -62,6 +64,7 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/zwierzeta").setViewName("zwierzeta");
         registry.addViewController("/navbar-logged-user").setViewName("user/navbar-logged-user");
         registry.addViewController("/umowy").setViewName("user/umowy");
+        registry.addViewController("/podpisz").setViewName("user/podpisz");
     }
 
     @Controller
@@ -82,11 +85,11 @@ public class AppController implements WebMvcConfigurer {
         return "adresy";
     }
 
-    @RequestMapping(value={"/selectAnimal"}, method=RequestMethod.POST)
+    @RequestMapping(value={"selectAnimal"}, method=RequestMethod.POST)
     public String getCurrentAnimal(@ModelAttribute("selected") String selected) {
         currentAnimal = Integer.parseInt(selected);
         // System.out.println("animal="+currentAnimal);
-        return "user/umowy";
+        return "redirect:/user/podpisz";
     }
 
     @RequestMapping("/user/umowy")
@@ -100,6 +103,8 @@ public class AppController implements WebMvcConfigurer {
                 (ArrayList<Integer>)umowaDAO.listZwierzetaIdOfKlientId(umowy, user.getNr_klienta()));
         model.addAttribute("zwierzeta", zwierzeta);
         model.addAttribute("umowy", umowy);
+        var pracownicy = pracownikDAO.getByUmowy(umowy);
+        model.addAttribute("pracownicyConcat", pracownicy);
     }
 
     @RequestMapping(value={"/main_admin"})
@@ -152,5 +157,21 @@ public class AppController implements WebMvcConfigurer {
         model.addAttribute("listZwierzeta", listZwierzeta);
         return "/zwierzeta";
     }
+
+    @RequestMapping("/user/podpisz")
+    public void showPodpiszUmowe(Model model) {
+        var animalIds = new ArrayList<Integer>();
+        animalIds.add(currentAnimal);
+        var zwierze = zwierzeDAO.getZwierzetaOfIds(animalIds).get(0);
+        var dostepniPracownicy = pracownikDAO.getPracownikByStanowisko(Pracownik.ZWYKLY_PRACOWNIK);
+        var randomPracownik = RandomUtility.choice(dostepniPracownicy);
+        model.addAttribute("zwierze", zwierze);
+        model.addAttribute("pracownik", randomPracownik);
+        System.out.println(zwierze);
+        System.out.println(randomPracownik);
+    }
+
+//    @RequestMapping(value={"logout"}, method=RequestMethod.POST)
+//    public String logOut(@ModelAttribute("log-out") )
 
 }

@@ -10,43 +10,81 @@
 <!-- Navigation -->
 <div id="nav-placeholder">
 <script>
-$(function(){
-  $("#nav-placeholder").load("navbar-logged-user");
-});
+    $(function(){
+      $("#nav-placeholder").load("navbar-logged-user");
+    });
 </script>
 </div>
 
-<!--<p align="center">To są user/umowy</p>-->
+<br/>
+<div class="container">
+    <h2 align="center">Nowa umowa</h2>
+    <br/>
+    <div class="row">
+        <div class="col">
+            <h3 align="center">Dane pupila</h3>
+            <table border="0" cellpadding="10" th:each="z : ${zwierze}">
+                <tr>
+                    <td>Imię: </td>
+                    <td th:text="${z.imie}"></td>
+                </tr>
+                <tr>
+                    <td>Gatunek: </td>
+                    <td th:text="${z.gatunek}"></td>
+                </tr>
+                <tr>
+                    <td>Rasa: </td>
+                    <td th:text="${z.rasa}"></td>
+                </tr>
+                <tr>
+                    <td>Rozmiar: </td>
+                    <td th:text="${z.rozmiar}"></td>
+                </tr>
+                <tr>
+                    <td>Średni koszt utrzymania: </td>
+                    <td th:text="${z.koszt_utrzymania}"></td>
+                </tr>
+                <tr>
+                    <td>Karma: </td>
+                    <td th:text="${z.nazwa_karmy}"></td>
+                </tr>
+                <tr>
+                    <td>Data przyjęcia: </td>
+                    <td th:text="${z.data_przyjecia}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col">
+            <h3 align="center">Dane pracownika</h3>
+            <table border="0" cellpadding="10" th:each="p : ${pracownik}">
+                <tr>
+                    <td>Imię:</td>
+                    <td th:text="${p.imie}"></td>
+                </tr>
+                <tr>
+                    <td>Nazwisko:</td>
+                    <td th:text="${p.nazwisko}"></td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td th:text="${p.email}"></td>
+                </tr>
+                <tr>
+                    <td>Numer telefonu:</td>
+                    <td th:text="${p.nr_telefonu}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 
-<div align="center">
-    <h2>Moje umowy</h2>
-    <table border="1" cellpadding="10">
-        <!-- Table header -->
-        <thead>
-        <tr> <!-- Table row -->
-            <th>Zwierzę</th>
-            <th>Rodzaj umowy</th>
-            <th>Data podpisu</th>
-            <th>Data ważności</th>
-        </tr>
-        </thead>
-        <!-- Table body -->
-        <tbody>
-        <tr th:each="zw : ${zwierzeta}">
-            <td th:text="${zw.imie}">Imię</td>
-        </tr>
-        <tr th:each="u : ${umowy}">
-            <td th:text="${u.rodzaj}">Rodzaj umowy</td>
-            <td th:text="${u.data_podpisu}">Data podpisu</td>
-            <td th:text="${u.data_waznosci}">Data ważności</td>
-        </tr>
-        </tbody>
-    </table>
+
 </div>
 
+<script th:src="@{/js/script.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
 </body>
 </html>

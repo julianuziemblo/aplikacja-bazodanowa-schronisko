@@ -14,6 +14,9 @@
       $("#nav-placeholder").load("navbar");
     });
 </script>
+
+<br/>
+<h1 align="center">Nasi pupile</h1>
 <br/>
 
 <div class="container" align="center">
@@ -49,7 +52,7 @@
             <span class="card-text" id="plec" th:text="${zw.plec}">Płeć</span></p>
             <p><label for="rozmiar">Rozmiar: </label>
             <span class="card-text" id="rozmiar" th:text="${zw.rozmiar}">Rozmiar</span></p>
-            <form th:action="@{/selectAnimal}" th:object="${selected}" method="post">
+            <form th:action="@{selectAnimal}" th:object="${selected}" method="post">
                 <input type="hidden" class="form-control" th:value="${zw.nr_zwerzecia}" id="selected" name="selected">
                 <button type="submit" class="btn btn-primary">Adoptuj</button>
             </form>
