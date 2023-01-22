@@ -2,6 +2,9 @@ package bdbt_project.SpringApplication.dbtables;
 
 public class Umowa {
     private int nr_umowy;
+    /**
+     * Rodzaj in ("P"- "Próbna", "T"- "Tymczasowa", "N" - na czas Nieokreślony)
+     */
     private char rodzaj;
     private String data_podpisu;
     private String data_waznosci;

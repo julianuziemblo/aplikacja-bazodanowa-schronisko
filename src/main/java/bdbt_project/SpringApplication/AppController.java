@@ -1,10 +1,7 @@
 package bdbt_project.SpringApplication;
 
 import bdbt_project.SpringApplication.dbDAO.*;
-import bdbt_project.SpringApplication.dbtables.Adres;
-import bdbt_project.SpringApplication.dbtables.Klient;
-import bdbt_project.SpringApplication.dbtables.Pracownik;
-import bdbt_project.SpringApplication.dbtables.Zwierze;
+import bdbt_project.SpringApplication.dbtables.*;
 import bdbt_project.SpringApplication.dto.KlientPassword;
 
 import bdbt_project.SpringApplication.filters.GatunekFilter;
@@ -50,6 +47,7 @@ public class AppController implements WebMvcConfigurer {
 
     private Integer currentAnimal = null;
     private GatunekFilter gatunekFilter = new GatunekFilter();
+    private Umowa currUmowaParams = null;
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -169,9 +167,9 @@ public class AppController implements WebMvcConfigurer {
         model.addAttribute("pracownik", randomPracownik);
         System.out.println(zwierze);
         System.out.println(randomPracownik);
+        currUmowaParams = new Umowa(0,'P',"","",zwierze.getNr_zwerzecia(),0,randomPracownik.getNr_pracownika());
     }
 
-//    @RequestMapping(value={"logout"}, method=RequestMethod.POST)
-//    public String logOut(@ModelAttribute("log-out") )
+
 
 }
