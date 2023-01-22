@@ -2,6 +2,7 @@ package bdbt_project.SpringApplication.dbDAO;
 
 import bdbt_project.SpringApplication.dbtables.Zwierze;
 
+import bdbt_project.SpringApplication.filters.GatunekFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,5 +35,20 @@ public class ZwierzeDAO {
             lista.addAll(jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Zwierze.class)));
         }
         return lista;
+    }
+
+    public List<Zwierze> listWhereGatunek(List<String> params) {
+        String sql;
+        if(params.isEmpty()) {
+            sql = "SELECT * FROM ZWIERZETA";
+        } else {
+            sql = "SELECT * FROM ZWIERZETA WHERE gatunek='";
+            if(params.size() == 2) {
+                sql += params.get(0) + "' OR gatunek='" + params.get(1) + "'";
+            } else {
+                sql += params.get(0) + "'";
+            }
+        }
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Zwierze.class));
     }
 }

@@ -17,14 +17,17 @@
 <br/>
 
 <div class="container" align="center">
-    <form th:action="@{/getFilter}" th:object="${animalType}">
-        <div class="dropdown">
+    <form id="form" action="#" th:action="@{/getFilter}" th:object="${gatunekFilter}" method="post">
+        <div th:object="${gatunekFilter}"  class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Filtruj
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <input type="button" value="Psy" class="dropdown-item"/>
-                <input type="button" value="Koty" class="dropdown-item"/>
+            <div th:object="${gatunekFilter}"  class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <input type="checkbox" th:field="*{pies}" value="Pies" th:value="Pies" id="Pies" name="Pies"/>
+                <label for="Pies">Pies</label>
+                <input type="checkbox" th:field="*{kot}" value="Kot" th:value="Kot" id="Kot" name="Kot"/>
+                <label for="Kot">Kot</label>
+                <button type="submit">Filtruj</button>
             </div>
         </div>
     </form>

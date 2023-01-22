@@ -3,8 +3,10 @@ package bdbt_project.SpringApplication;
 import bdbt_project.SpringApplication.dbDAO.*;
 import bdbt_project.SpringApplication.dbtables.Adres;
 import bdbt_project.SpringApplication.dbtables.Klient;
+import bdbt_project.SpringApplication.dbtables.Zwierze;
 import bdbt_project.SpringApplication.dto.KlientPassword;
 
+import bdbt_project.SpringApplication.filters.GatunekFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -44,7 +46,8 @@ public class AppController implements WebMvcConfigurer {
 
     private final KlientPasswordDAO klientPasswordDAO = new KlientPasswordDAO();
 
-    public Integer currentAnimal = null;
+    private Integer currentAnimal = null;
+    private GatunekFilter gatunekFilter = new GatunekFilter();
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -134,10 +137,18 @@ public class AppController implements WebMvcConfigurer {
         return "redirect:/main_user";
     }
 
+    @RequestMapping(value={"/getFilter"}, method=RequestMethod.POST)
+    public String changeFilter(@ModelAttribute("gatunekFilter") GatunekFilter gatunekFilter) {
+        this.gatunekFilter = gatunekFilter;
+        return "redirect:/zwierzeta";
+    }
+
     @RequestMapping("/zwierzeta")
     public String showZwierzeta(Model model) {
-        var listZwierzeta = zwierzeDAO.list();
-        System.out.println(listZwierzeta);
+        List<Zwierze> listZwierzeta;
+        var params = gatunekFilter.getSelected();
+        listZwierzeta = zwierzeDAO.listWhereGatunek(params);
+        model.addAttribute("gatunekFilter", gatunekFilter);
         model.addAttribute("listZwierzeta", listZwierzeta);
         return "/zwierzeta";
     }

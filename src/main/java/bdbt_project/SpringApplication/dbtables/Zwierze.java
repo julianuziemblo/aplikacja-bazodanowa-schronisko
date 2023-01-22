@@ -82,6 +82,7 @@ public class Zwierze {
     }
 
     public char getRozmiar() {
+        // TODO: WYRZUCAC AKTUALN ROZMIAR!
         return rozmiar;
     }
 
