@@ -14,10 +14,31 @@
       $("#nav-placeholder").load("navbar");
     });
 </script>
+<br/>
+
+<div class="container" align="center">
+    <form th:action="@{/getFilter}" th:object="${animalType}">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filtruj
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <input type="button" value="Psy" class="dropdown-item"/>
+                <input type="button" value="Koty" class="dropdown-item"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br/>
 
 <div class="container" align="center">
     <div class="card" style="width: 18rem;" th:each="zw: ${listZwierzeta}">
         <div class="card-body">
+
+            <img th:src="@{${'assetes/animals/'+ zw.nr_zwerzecia +'.png'}}" width="200px"/>
+
+            <br/>
             <h4 class="card-title" th:text="${zw.imie}"><b>Imię</b></h4>
             <p><label for="rasa">Rasa: </label>
             <span class="card-text" id="rasa" th:text="${zw.rasa != null} ? ${zw.rasa} : 'Nieznana'">Rasa</span></p>
@@ -25,7 +46,10 @@
             <span class="card-text" id="plec" th:text="${zw.plec}">Płeć</span></p>
             <p><label for="rozmiar">Rozmiar: </label>
             <span class="card-text" id="rozmiar" th:text="${zw.rozmiar}">Rozmiar</span></p>
-            <a href="user/umowy" class="btn btn-primary">Adoptuj</a>
+            <form th:action="@{/selectAnimal}" th:object="${selected}" method="post">
+                <input type="hidden" class="form-control" th:value="${zw.nr_zwerzecia}" id="selected" name="selected">
+                <button type="submit" class="btn btn-primary">Adoptuj</button>
+            </form>
         </div>
     </div>
     <br/>

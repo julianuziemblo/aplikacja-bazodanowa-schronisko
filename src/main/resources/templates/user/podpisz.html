@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Podpisywanie umowy</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<div id="nav-placeholder">
+<script>
+$(function(){
+  $("#nav-placeholder").load("navbar-logged-user");
+});
+</script>
+</div>
+
+<!--<p align="center">To są user/umowy</p>-->
+
+
+<div align="center">
+    <h2>Moje umowy</h2>
+    <table border="1" cellpadding="10">
+        <!-- Table header -->
+        <thead>
+        <tr> <!-- Table row -->
+            <th>Zwierzę</th>
+            <th>Rodzaj umowy</th>
+            <th>Data podpisu</th>
+            <th>Data ważności</th>
+        </tr>
+        </thead>
+        <!-- Table body -->
+        <tbody>
+        <tr th:each="zw : ${zwierzeta}">
+            <td th:text="${zw.imie}">Imię</td>
+        </tr>
+        <tr th:each="u : ${umowy}">
+            <td th:text="${u.rodzaj}">Rodzaj umowy</td>
+            <td th:text="${u.data_podpisu}">Data podpisu</td>
+            <td th:text="${u.data_waznosci}">Data ważności</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

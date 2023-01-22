@@ -20,6 +20,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +44,7 @@ public class AppController implements WebMvcConfigurer {
 
     private final KlientPasswordDAO klientPasswordDAO = new KlientPasswordDAO();
 
-    public String currentUser = null;
+    public Integer currentAnimal = null;
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -76,15 +79,11 @@ public class AppController implements WebMvcConfigurer {
         return "adresy";
     }
 
-    @RequestMapping(value={"/loginHolder"})
-    public void getCurrentLoggedInUser(Model model) {
-        model.addAttribute("login", currentUser);
-    }
-
-    @RequestMapping(value={"/loginHolder"}, method=RequestMethod.POST)
-    public void getCurrentLoggedInUser(@ModelAttribute("login") String login) {
-        System.out.println(login);
-        currentUser = login;
+    @RequestMapping(value={"/selectAnimal"}, method=RequestMethod.POST)
+    public String getCurrentAnimal(@ModelAttribute("selected") String selected) {
+        currentAnimal = Integer.parseInt(selected);
+        // System.out.println("animal="+currentAnimal);
+        return "user/umowy";
     }
 
     @RequestMapping("/user/umowy")
