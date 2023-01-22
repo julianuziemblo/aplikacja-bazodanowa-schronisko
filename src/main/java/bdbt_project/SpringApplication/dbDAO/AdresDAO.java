@@ -35,7 +35,7 @@ public class AdresDAO {
     }
 
     public Adres get(int nr_adresu) {
-        var sql = "SELECT * FROM ADRESY WHERE NR_KLIENTA="+nr_adresu;
+        var sql = "SELECT * FROM ADRESY WHERE NR_KLIENTA='"+nr_adresu+"'";
         return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Adres.class));
     }
 

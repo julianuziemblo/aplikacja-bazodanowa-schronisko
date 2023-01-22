@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Zwierzęta</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<div id="nav-placeholder"></div>
+<script>
+    $(function(){
+      $("#nav-placeholder").load("navbar");
+    });
+</script>
+
+<div class="container" align="center">
+    <div class="card" style="width: 18rem;" th:each="zw: ${listZwierzeta}">
+        <div class="card-body">
+            <h4 class="card-title" th:text="${zw.imie}"><b>Imię</b></h4>
+            <p><label for="rasa">Rasa: </label>
+            <span class="card-text" id="rasa" th:text="${zw.rasa != null} ? ${zw.rasa} : 'Nieznana'">Rasa</span></p>
+            <p><label for="plec">Płeć: </label>
+            <span class="card-text" id="plec" th:text="${zw.plec}">Płeć</span></p>
+            <p><label for="rozmiar">Rozmiar: </label>
+            <span class="card-text" id="rozmiar" th:text="${zw.rozmiar}">Rozmiar</span></p>
+            <a href="user/umowy" class="btn btn-primary">Adoptuj</a>
+        </div>
+    </div>
+    <br/>
+    <br/>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

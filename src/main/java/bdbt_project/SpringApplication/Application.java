@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-
 @SpringBootApplication
 public class Application {
 	private static HashMap<Integer, String> errorCodes;

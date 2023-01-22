@@ -1,19 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main User Page</title>
-
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <title style="text-transform:capitalize">Strona główna użytkownika [[${#httpServletRequest.remoteUser}]]</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
-
 <!-- Navigation -->
 <div id="nav-placeholder"></div>
 <script>
     $(function(){
-      $("#nav-placeholder").load("navbar");
+      $("#nav-placeholder").load("navbar-logged-user");
     });
 </script>
 
@@ -23,8 +21,8 @@
         <div class="col-md-10 mt-5">
             <form method="post" th:action="@{/index}">
                 <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome <a
-                            style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
+                    <label style="font-size:30px" th:inline="text">Welcome
+                        <a style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
                         to the main page!</label>
                     <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
                 </div>
@@ -36,7 +34,6 @@
 
     </div>
 </div>
-
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

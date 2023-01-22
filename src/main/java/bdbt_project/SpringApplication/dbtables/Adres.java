@@ -78,6 +78,14 @@ public class Adres {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Adres{" +
+                "nr_adresu=" + nr_adresu +
+                ", kraj='" + kraj + '\'' +
+                ", miasto='" + miasto + '\'' +
+                ", kod_pocztowy='" + kod_pocztowy + '\'' +
+                ", ulica='" + ulica + '\'' +
+                ", nr_domu='" + nr_domu + '\'' +
+                ", nr_mieszkania=" + nr_mieszkania +
+                '}';
     }
 }

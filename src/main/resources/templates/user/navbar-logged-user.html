@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-        <a class="navbar-brand" href="/">Schronisko</a>
+        <a class="navbar-brand" href="/main">Schronisko</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -8,19 +8,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/index}">Strona główna</a>
-                </li>
-
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/login}">Zaloguj się
-                    </a>
-                </li>
-
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/register}">Zarejestruj się
-                    </a>
+                    <a class="nav-link" th:href="@{/main_user}">Strona główna</a>
                 </li>
 
                 <li class="nav-item active">
@@ -28,6 +17,16 @@
                     </a>
                 </li>
 
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/umowy}">Moje umowy
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" style="color:lightskyblue">Zalogowano jako: [[${#httpServletRequest.remoteUser}]]   </a>
+                </li>
+                <li>
+                    <button class="btn btn-primary" type="submit" onclick="a = createElement('a'); a.href='/index'; a.click()" value="Sign Out">Wyloguj</button>
+                </li>
             </ul>
         </div>
     </div>

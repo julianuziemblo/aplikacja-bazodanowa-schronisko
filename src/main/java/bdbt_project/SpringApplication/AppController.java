@@ -1,8 +1,6 @@
 package bdbt_project.SpringApplication;
 
-import bdbt_project.SpringApplication.dbDAO.AdresDAO;
-import bdbt_project.SpringApplication.dbDAO.KlientDAO;
-import bdbt_project.SpringApplication.dbDAO.KlientPasswordDAO;
+import bdbt_project.SpringApplication.dbDAO.*;
 import bdbt_project.SpringApplication.dbtables.Adres;
 import bdbt_project.SpringApplication.dbtables.Klient;
 import bdbt_project.SpringApplication.dto.KlientPassword;
@@ -10,6 +8,8 @@ import bdbt_project.SpringApplication.dto.KlientPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +19,8 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -29,9 +31,17 @@ public class AppController implements WebMvcConfigurer {
     private final AdresDAO adresDAO = new AdresDAO(new JdbcTemplate());
 
     @Autowired
+    private final UmowaDAO umowaDAO = new UmowaDAO(new JdbcTemplate());
+
+    @Autowired
     private final KlientDAO klientDAO = new KlientDAO(new JdbcTemplate());
 
+    @Autowired
+    private final ZwierzeDAO zwierzeDAO = new ZwierzeDAO(new JdbcTemplate());
+
     private final KlientPasswordDAO klientPasswordDAO = new KlientPasswordDAO();
+
+    public String currentUser = null;
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -43,6 +53,9 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/adresy").setViewName("adresy");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/navbar").setViewName("navbar");
+        registry.addViewController("/zwierzeta").setViewName("zwierzeta");
+        registry.addViewController("/navbar-logged-user").setViewName("user/navbar-logged-user");
+        registry.addViewController("/umowy").setViewName("user/umowy");
     }
 
     @Controller
@@ -58,8 +71,33 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping("/adresy")
     public String showAdresyPage(Model model) {
         List<Adres> listAdres = adresDAO.list();
+        // System.out.println(listAdres);
         model.addAttribute("listAdres", listAdres);
         return "adresy";
+    }
+
+    @RequestMapping(value={"/loginHolder"})
+    public void getCurrentLoggedInUser(Model model) {
+        model.addAttribute("login", currentUser);
+    }
+
+    @RequestMapping(value={"/loginHolder"}, method=RequestMethod.POST)
+    public void getCurrentLoggedInUser(@ModelAttribute("login") String login) {
+        System.out.println(login);
+        currentUser = login;
+    }
+
+    @RequestMapping("/user/umowy")
+    public void showUmowy(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        System.out.println(email);
+        var user = klientDAO.getByEmail(email);
+        var umowy = umowaDAO.listWhereId(user.getNr_klienta());
+        var zwierzeta = zwierzeDAO.getZwierzetaOfIds(
+                (ArrayList<Integer>)umowaDAO.listZwierzetaIdOfKlientId(umowy, user.getNr_klienta()));
+        model.addAttribute("zwierzeta", zwierzeta);
+        model.addAttribute("umowy", umowy);
     }
 
     @RequestMapping(value={"/main_admin"})
@@ -87,7 +125,6 @@ public class AppController implements WebMvcConfigurer {
     public String saveKlientData(@ModelAttribute("klientDAO") Klient klient,
                                  @ModelAttribute("adresDAO") Adres adres,
                                  @ModelAttribute("klientHaslo") KlientPassword kh) throws Exception {
-        // TODO: VALIDATE INPUTS, REDIRECT TO ERROR PAGE IF NECESSARY
         adresDAO.save(adres);
         var nr_adresu = adresDAO.getHighestIdAddress().getNr_adresu();
         klient.setNr_adresu(nr_adresu);
@@ -96,6 +133,14 @@ public class AppController implements WebMvcConfigurer {
         klientDAO.save(klient);
         klientPasswordDAO.save(kh);
         return "redirect:/main_user";
+    }
+
+    @RequestMapping("/zwierzeta")
+    public String showZwierzeta(Model model) {
+        var listZwierzeta = zwierzeDAO.list();
+        System.out.println(listZwierzeta);
+        model.addAttribute("listZwierzeta", listZwierzeta);
+        return "/zwierzeta";
     }
 
 }
