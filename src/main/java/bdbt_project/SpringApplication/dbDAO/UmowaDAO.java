@@ -1,9 +1,6 @@
 package bdbt_project.SpringApplication.dbDAO;
 
-import bdbt_project.SpringApplication.dbtables.Pracownik;
-import bdbt_project.SpringApplication.dbtables.Umowa;
-import bdbt_project.SpringApplication.dbtables.UmowaInfo;
-import bdbt_project.SpringApplication.dbtables.Zwierze;
+import bdbt_project.SpringApplication.dbtables.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -62,6 +59,15 @@ public class UmowaDAO {
             umowyInfo.add(new UmowaInfo(umowy.get(i),
                     zwierzeta.get(i).getImie(),
                     pracownicy.get(i).getImie_nazwisko()));
+        }
+        return umowyInfo;
+    }
+
+    public List<UmowaInfo> listUmowaKlient(List<Umowa> umowy, List<Zwierze> zwierzeta, List<Klient> klienci) {
+        var umowyInfo = new ArrayList<UmowaInfo>();
+        for(int i=0; i<umowy.size(); ++i) {
+            umowyInfo.add(new UmowaInfo(umowy.get(i), zwierzeta.get(i).getImie(),
+                    klienci.get(i).getImie() + " " + klienci.get(i).getNazwisko()));
         }
         return umowyInfo;
     }

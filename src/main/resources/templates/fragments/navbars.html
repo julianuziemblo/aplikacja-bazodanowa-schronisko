@@ -54,7 +54,7 @@
 <div th:fragment="navbar-logged-user">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
-            <a class="navbar-brand" style="font-size:30px" href="/main"><img src="assetes/other/logo.png" width="100"/>
+            <a class="navbar-brand" style="font-size:30px" href="/main"><img th:src="@{../assetes/other/logo.png}" width="100"/>
                 Zakątek zwierzątek</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive"
@@ -91,5 +91,42 @@
         <script th:src="@{/js/script.js}"></script>
     </nav>
 </div>
+
+<!-- fragments/navbar.html :: navbar-logged-emp -->
+<div th:fragment="navbar-logged-emp">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" style="font-size:30px" href="/main"><img th:src="@{../assetes/other/logo.png}" width="100"/>
+                Zakątek zwierzątek</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto align-middle">
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-size:20px" th:href="@{/main_user}">Strona główna</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-size:20px" th:href="@{/user/umowy}">Umowy</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="color:lightskyblue; font-size:20px">Zalogowano jako: [[${#httpServletRequest.remoteUser}]]   </a>
+                    </li>
+                    <li>
+                        <form method="post" th:action="@{/index}">
+                            <input type="hidden" name="_csrf" value="07b8ec05-fe21-4819-80b1-2ad57ae9450e"/>
+                            <input type="submit" class="btn btn-info align-middle" style="width:200" value="Wyloguj" />
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script th:src="@{/js/script.js}"></script>
+    </nav>
+</div>
+
 </body>
 </html>

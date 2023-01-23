@@ -1,7 +1,7 @@
 package bdbt_project.SpringApplication.dbDAO;
 
 import bdbt_project.SpringApplication.dbtables.Klient;
-import bdbt_project.SpringApplication.utility.SQLInputChecker;
+import bdbt_project.SpringApplication.dbtables.Umowa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -30,18 +31,12 @@ public class KlientDAO {
     }
 
     public Klient getByNrKlienta(int nr_klienta) {
-        if(!SQLInputChecker.check(String.valueOf(nr_klienta))) {
-            throw new RuntimeException("Provided client number is invalid!");
-        }
         var sql = "SELECT * FROM KLIENCI WHERE NR_KLIENTA='"+nr_klienta+"'";
         return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Klient.class));
     }
 
     public Klient getByEmail(String email) {
         System.out.println(email);
-        if(!SQLInputChecker.check(email)) {
-            throw new RuntimeException("Provided client email is invalid!");
-        }
         var sql = "SELECT * FROM KLIENCI WHERE EMAIL='"+email+"' ORDER BY nr_klienta DESC";
         var found = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Klient.class));
         if(found.size() == 0) {
@@ -57,4 +52,11 @@ public class KlientDAO {
         insert.execute(param);
     }
 
+    public List<Klient> getKlienciByUmowy(List<Umowa> umowy) {
+        var klienci = new ArrayList<Klient>();
+        for(var umowa: umowy) {
+            klienci.add(getByNrKlienta(umowa.getNr_klienta()));
+        }
+        return klienci;
+    }
 }

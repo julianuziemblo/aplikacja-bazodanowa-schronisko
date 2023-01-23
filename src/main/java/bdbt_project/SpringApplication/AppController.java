@@ -64,11 +64,12 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/navbar").setViewName("navbar");
         registry.addViewController("/zwierzeta").setViewName("zwierzeta");
-        registry.addViewController("/navbar-logged-user").setViewName("user/navbar-logged-user");
         registry.addViewController("/umowy.html").setViewName("user/umowy");
         registry.addViewController("/podpisz").setViewName("user/podpisz");
         registry.addViewController("/profil_zwierzecia").setViewName("profil_zwierzecia");
         registry.addViewController("/lokacje").setViewName("lokacje");
+        registry.addViewController("/main_employee").setViewName("employee/main_employee");
+        registry.addViewController("/emp_umowy").setViewName("employee/emp_umowy");
     }
 
     @Controller
@@ -123,11 +124,6 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value={"/main_admin"})
     public String showAdminPage(Model model) {
         return "admin/main_admin";
-    }
-
-    @RequestMapping(value={"/main_user"})
-    public String showUserPage(Model model) {
-        return "user/main_user";
     }
 
     @RequestMapping(value={"/register"})
@@ -213,5 +209,14 @@ public class AppController implements WebMvcConfigurer {
         var adresy = adresDAO.listAdresyForSchroniskaId(lokacjeIds);
         model.addAttribute("listSchroniska", lokacje);
         model.addAttribute("listAdresy", adresy);
+    }
+
+    @RequestMapping("/employee/emp_umowy")
+    public void showEmpUmowy(Model model) {
+        var umowy = umowaDAO.list();
+        var zwierzeta = zwierzeDAO.getZwierzetaByUmowy(umowy);
+        var klienci = klientDAO.getKlienciByUmowy(umowy);
+        var umowyInfo = umowaDAO.listUmowaKlient(umowy, zwierzeta, klienci);
+        model.addAttribute("umowyList", umowyInfo);
     }
 }

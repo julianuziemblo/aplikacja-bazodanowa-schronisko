@@ -1,11 +1,14 @@
 package bdbt_project.SpringApplication;
 
+import bdbt_project.SpringApplication.dbDAO.PracownikDAO;
 import bdbt_project.SpringApplication.utility.JSONUtility;
 
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,10 +48,13 @@ public class Application {
 		userRedirect = new HashMap<>();
 		userRedirect.put("admin", "redirect:/main_admin");
 		userRedirect.put("user", "redirect:/main_user");
+		userRedirect.put("employee", "redirect:/main_employee");
 		var usernames = users.keySet();
 		for(var user: usernames) {
 			userRedirect.put(user, "redirect:/main_user");
 		}
+		userRedirect.put("albertologuapo@gmail.com", "redirect:/main_employee");
+		userRedirect.put("emp", "redirect:/main_employee");
 	}
 
 	private static void loadUserAuthentication() throws IOException, ParseException {

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Umowy</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar-logged-emp" ></header>
+
+<br/>
+<div class="container" align="center">
+    <h2>Moje umowy</h2>
+    <br/>
+    <table border="1" cellpadding="10">
+        <!-- Table header -->
+        <thead>
+        <tr> <!-- Table row -->
+            <th>Imię zwierzęcia</th>
+            <th>Data podpisu</th>
+            <th>Data ważności</th>
+            <th>Klient</th>
+            <th>Status umowy</th>
+        </tr>
+        </thead>
+        <!-- Table body -->
+        <tbody>
+        <tr th:each="ui : ${umowyList}">
+            <td th:text="${ui.imie}">Imię zwierzęcia</td>
+            <td th:text="${ui.data_podpisu}">Data podpisu</td>
+            <td th:text="${ui.data_waznosci}">Data ważności</td>
+            <td th:text="${ui.imie_nazwisko}">Klient</td>
+            <td th:text="${ui.rodzajFormatted}">Status umowy</td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
+</body>
+</html>

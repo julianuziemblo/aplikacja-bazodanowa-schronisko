@@ -1,5 +1,6 @@
 package bdbt_project.SpringApplication.dbDAO;
 
+import bdbt_project.SpringApplication.dbtables.Umowa;
 import bdbt_project.SpringApplication.dbtables.Zwierze;
 
 import bdbt_project.SpringApplication.filters.GatunekFilter;
@@ -55,5 +56,13 @@ public class ZwierzeDAO {
     public Zwierze getZwierzeById(int id) {
         String sql = "SELECT * FROM ZWIERZETA WHERE nr_zwerzecia='"+id+"'";
         return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Zwierze.class));
+    }
+
+    public List<Zwierze> getZwierzetaByUmowy(List<Umowa> umowy) {
+        List<Zwierze> zwierzeta = new ArrayList<>();
+        for(var umowa: umowy) {
+            zwierzeta.add(getZwierzeById(umowa.getNr_zwerzecia()));
+        }
+        return zwierzeta;
     }
 }

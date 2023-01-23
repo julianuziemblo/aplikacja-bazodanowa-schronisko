@@ -25,10 +25,17 @@
                     <br/>
                     <div style="font-size:20px">Oto twoja strona główna. Zapraszamy do adoptowania naszych pupili!</div>
                     <br/>
-                    <button class="btn btn-primary" type="submit" onclick="var a=document.createElement('a');a.href='/zwierzeta';a.click()" value="Sign Out">Przeglądaj pupili
-                </button>
                 </div>
             </form>
+            <div class="container rounded" align="center">
+                <a th:href="@{/zwierzeta}"><img src="https://thiscatdoesnotexist.com/" class="rounded"/></a>
+            </div>
+            <p class="text-secondary" style="font-size:3">(obrazek z <a href="https://thiscatdoesnotexist.com/">https://thiscatdoesnotexist.com/</a>)</p>
+
+            <button class="btn btn-primary" type="submit" onclick="var a=document.createElement('a');a.href='/zwierzeta';a.click()" value="zwierzeta">Przeglądaj pupili</button>
+            <br/>
+            <br/>
+            <br/>
         </div>
         <br/>
         <br/>

@@ -37,7 +37,7 @@
 <div class="container" align="center">
     <div class="card" style="width: 18rem;" th:each="zw: ${listZwierzeta}">
         <div class="card-body">
-            <img th:src="@{${'assetes/animals/'+ zw.nr_zwerzecia +'.png'}}" width="200px"/>
+            <img class="rounded" th:src="@{${'assetes/animals/'+ zw.nr_zwerzecia +'.png'}}" width="200px"/>
             <br/>
             <h4 class="card-title" th:text="${zw.imie}"><b>Imię</b></h4>
             <p><label for="rasa">Rasa: </label>

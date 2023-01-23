@@ -2,43 +2,41 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title style="text-transform:capitalize">Strona główna użytkownika [[${#httpServletRequest.remoteUser}]]</title>
+    <title style="text-transform:capitalize">Strona główna pracownika [[${#httpServletRequest.remoteUser}]]</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
 <!-- Navigation -->
-<div id="nav-placeholder"></div>
-<script>
-    $(function(){
-      $("#nav-placeholder").load("navbar-logged-user");
-    });
-</script>
+<header th:insert="fragments/navbars.html :: navbar-logged-emp" ></header>
 
-<div class="container">
-    <div class="row">
-
-        <div class="col-md-10 mt-5">
+<br/>
+<br/>
+<div class="container" align="center">
+    <div class="row" align="center">
+        <div class="col" align="center">
             <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome
+                <div class="form-group" align="center">
+                    <label style="font-size:30px" th:inline="text">Witaj,
                         <a style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
-                        to the main page!</label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
+                        !</label>
+                    <div style="font-size:20px" align="center">Zacznij przeglądać umowy:</div>
+                    <div style="font-size:10px; color:#f1f1f1" align="center">DO ROBOTY</div>
                 </div>
-
-                <button class="btn btn-primary" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
-                </button>
+                <br/>
+                <br/>
+                <a th:href="@{/employee/emp_umowy}" type="button" class="btn btn-primary">Umowy</a>
             </form>
+            <br/>
+            <br/>
+            <br/>
         </div>
-
     </div>
 </div>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
 
 <footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>
