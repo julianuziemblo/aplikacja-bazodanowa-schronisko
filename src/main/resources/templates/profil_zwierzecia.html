@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Profil pupila</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar-logged-user" ></header>
+
+<br/>
+<h1 align="center">Profil pupila</h1>
+<br/>
+<br/>
+<div class="container">
+    <div class="row" th:each="z : ${zwierze}">
+        <div class="col">
+            <h3 align="center">Dane pupila</h3>
+            <br/>
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Imię: </td>
+                    <td th:text="${z.imie}"></td>
+                </tr>
+                <tr>
+                    <td>Gatunek: </td>
+                    <td th:text="${z.gatunek}"></td>
+                </tr>
+                <tr>
+                    <td>Rasa: </td>
+                    <td th:text="${z.rasa}"></td>
+                </tr>
+                <tr>
+                    <td>Rozmiar: </td>
+                    <td th:text="${z.rozmiar}"></td>
+                </tr>
+                <tr>
+                    <td>Średni koszt utrzymania: </td>
+                    <td th:text="${z.koszt_utrzymania + ' zł/miesiąc'}"></td>
+                </tr>
+                <tr>
+                    <td>Karma: </td>
+                    <td th:text="${z.nazwa_karmy}"></td>
+                </tr>
+                <tr>
+                    <td>Data przyjęcia: </td>
+                    <td th:text="${z.data_przyjecia}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col" align="center">
+            <img th:src="@{${'assetes/animals/'+ z.nr_zwerzecia +'.png'}}" height="400px"/>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row justify-content-center" th:each="z : ${zwierze}" align="center">
+        <form th:action="@{selectAnimal}" th:object="${selected}" method="post">
+            <input type="hidden" class="form-control" th:value="${z.nr_zwerzecia}" id="selected" name="selected">
+            <button type="submit" class="btn btn-primary btn-lg">Adoptuj</button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/validate_umowa.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

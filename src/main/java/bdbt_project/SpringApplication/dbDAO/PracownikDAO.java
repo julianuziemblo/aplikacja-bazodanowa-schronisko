@@ -32,7 +32,7 @@ public class PracownikDAO {
         var pracownicy = new ArrayList<Pracownik>();
         for(var umowa: umowy) {
             var nr_pracownika = umowa.getNr_pracownika();
-            String sql = "SELECT * FROM PRACOWNICY WHERE nr_pracownika="+nr_pracownika+"' ORDER BY nr_pracownika ASC";
+            String sql = "SELECT * FROM PRACOWNICY WHERE nr_pracownika='"+nr_pracownika+"' ORDER BY nr_pracownika ASC";
             var pracownik = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Pracownik.class));
             pracownicy.addAll(pracownik);
         }

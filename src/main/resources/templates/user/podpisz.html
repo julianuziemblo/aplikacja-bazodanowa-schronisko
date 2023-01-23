@@ -13,11 +13,18 @@
 
 <br/>
 <div class="container">
-    <h2 align="center">Nowa umowa</h2>
+    <div class="row justify-content-center">
+        <div class="col-sm bg-secondary">
+            <br/>
+            <h1 align="center" style="color:white"><b>Nowa umowa</b></h1>
+            <br/>
+        </div>
+    </div>
     <br/>
     <div class="row">
         <div class="col">
             <h3 align="center">Dane pupila</h3>
+            <br/>
             <table border="0" cellpadding="10" th:each="z : ${zwierze}">
                 <tr>
                     <td>Imię: </td>
@@ -37,7 +44,7 @@
                 </tr>
                 <tr>
                     <td>Średni koszt utrzymania: </td>
-                    <td th:text="${z.koszt_utrzymania}"></td>
+                    <td th:text="${z.koszt_utrzymania + ' zł/miesiąc'}"></td>
                 </tr>
                 <tr>
                     <td>Karma: </td>
@@ -50,7 +57,8 @@
             </table>
         </div>
         <div class="col">
-            <h3 align="left">Dane pracownika</h3>
+            <h3 align="center">Dane pracownika nadzorującego</h3>
+            <br/>
             <table border="0" cellpadding="10" th:each="p : ${pracownik}">
                 <tr>
                     <td>Imię:</td>
@@ -71,15 +79,30 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <label for="input">Data rozpoczęcia umowy: </label>
-            <input type="date" id="input">
+    <br/>
+    <br/>
+    <div class="container">
+        <div class="row justify-content-center">
+            <br/>
+            <div class="col-sm bg-secondary" align="center">
+                <br/>
+                <form id="form" action="#" th:action="@{/getDate}" th:object="${data_rozpoczecia}" method="post">
+                    <h3 style="color:white">Data rozpoczęcia umowy: </h3>
+                    <h5 style="color:lightgray">(Data odbioru pupila)</h5>
+
+                    <input th:field="*{data_podpisu}" type="date" id="date_input"/>
+                    <script th:src="@{/js/validate_umowa.js}"></script>
+                    <br/>
+                    <br/>
+                    <button type="submit" class="btn btn-primary btn-lg" id="sub">Podpisz</button>
+                </form>
+                <br/>
+            </div>
         </div>
     </div>
 </div>
 
-<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/validate_umowa.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

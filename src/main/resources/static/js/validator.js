@@ -28,7 +28,6 @@ function validate(event) {
     input.set("Data_urodzenia", document.getElementById("data_urodzenia").value);
     input.set("Plec", getPlecValue());
     input.set("Numer_telefonu", document.getElementById("nr_telefonu").value);
-    input.set("PESEL", document.getElementById("pesel").value);
     input.set("Haslo", document.getElementById("password").value);
     input.set("Potwierdz_haslo", document.getElementById("confirmPassword").value);
     input.set("Kraj", document.getElementById("kraj").value);
@@ -55,16 +54,17 @@ function validate(event) {
         window.alert("Błąd: pole Nazwisko nie może przekraczać 30 znaków!");
         return false;
     }
-    if(input.get("PESEL").length != 11) {
+    if(document.getElementById("pesel").value != "" && document.getElementById("pesel").value.length != 11) {
           window.alert("Błąd: pole Pesel musi mieć dokładnie 11 znaków!");
           return false;
-      }
+    }
     if(input.get("Haslo") != input.get("Potwierdz_haslo")) {
         window.alert("Błąd: hasła muszą być takie same!");
         console.log(input.get("Haslo") + " " + input.get("Potwierdz haslo"));
         return false;
     }
     console.log("Validation clear");
+    alert("Konto założone pomyślnie! Poczekaj na zaakceptowanie przez naszego pracownika");
     document.getElementById('form').submit();
     return true;
 }

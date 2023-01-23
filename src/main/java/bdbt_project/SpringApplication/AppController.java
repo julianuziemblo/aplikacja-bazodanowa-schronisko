@@ -6,6 +6,7 @@ import bdbt_project.SpringApplication.dto.KlientPassword;
 
 import bdbt_project.SpringApplication.filters.GatunekFilter;
 import bdbt_project.SpringApplication.utility.RandomUtility;
+import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -61,8 +62,9 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/navbar").setViewName("navbar");
         registry.addViewController("/zwierzeta").setViewName("zwierzeta");
         registry.addViewController("/navbar-logged-user").setViewName("user/navbar-logged-user");
-        registry.addViewController("/umowy").setViewName("user/umowy");
+        registry.addViewController("/umowy.html").setViewName("user/umowy");
         registry.addViewController("/podpisz").setViewName("user/podpisz");
+        registry.addViewController("/profil_zwierzecia").setViewName("profil_zwierzecia");
     }
 
     @Controller
@@ -86,23 +88,32 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value={"selectAnimal"}, method=RequestMethod.POST)
     public String getCurrentAnimal(@ModelAttribute("selected") String selected) {
         currentAnimal = Integer.parseInt(selected);
-        // System.out.println("animal="+currentAnimal);
+        System.out.println("animal="+currentAnimal);
         return "redirect:/user/podpisz";
+    }
+
+    @RequestMapping(value={"selectAnimal1"}, method=RequestMethod.POST)
+    public String getCurrentAnimal_1(@ModelAttribute("selected1") String selected1) {
+        currentAnimal = Integer.parseInt(selected1);
+        System.out.println("animal="+currentAnimal);
+        return "redirect:/profil_zwierzecia";
     }
 
     @RequestMapping("/user/umowy")
     public void showUmowy(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        System.out.println(email);
         var user = klientDAO.getByEmail(email);
         var umowy = umowaDAO.listWhereId(user.getNr_klienta());
         var zwierzeta = zwierzeDAO.getZwierzetaOfIds(
-                (ArrayList<Integer>)umowaDAO.listZwierzetaIdOfKlientId(umowy, user.getNr_klienta()));
-        model.addAttribute("zwierzeta", zwierzeta);
-        model.addAttribute("umowy", umowy);
+                (ArrayList<Integer>)umowaDAO.listZwierzetaIdOfCurrentKlient(umowy));
         var pracownicy = pracownikDAO.getByUmowy(umowy);
-        model.addAttribute("pracownicyConcat", pracownicy);
+        System.out.println(user);
+        System.out.println(umowy);
+        System.out.println(zwierzeta);
+        System.out.println(pracownicy);
+        var umowyInfo = umowaDAO.listUmowaInfo(umowy, pracownicy, zwierzeta);
+        model.addAttribute("umowaInfo", umowyInfo);
     }
 
     @RequestMapping(value={"/main_admin"})
@@ -165,11 +176,29 @@ public class AppController implements WebMvcConfigurer {
         var randomPracownik = RandomUtility.choice(dostepniPracownicy);
         model.addAttribute("zwierze", zwierze);
         model.addAttribute("pracownik", randomPracownik);
-        System.out.println(zwierze);
-        System.out.println(randomPracownik);
-        currUmowaParams = new Umowa(0,'P',"","",zwierze.getNr_zwerzecia(),0,randomPracownik.getNr_pracownika());
+        model.addAttribute("data_rozpoczecia", new Umowa());
+        // System.out.println(zwierze);
+        // System.out.println(randomPracownik);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        var currentKlient = klientDAO.getByEmail(email);
+        currUmowaParams = new Umowa(0,'P',"","",
+                zwierze.getNr_zwerzecia(), currentKlient.getNr_klienta(),
+                randomPracownik.getNr_pracownika());
     }
 
+    @RequestMapping(value={"/getDate"}, method=RequestMethod.POST)
+    public String getDateForUmowa(@ModelAttribute("data_rozpoczecia") Umowa umowa) {
+        currUmowaParams.setData_podpisu(umowa.getData_podpisu());
+        // System.out.println(currUmowaParams);
+        umowaDAO.save(currUmowaParams);
+        return "user/main_user";
+    }
 
-
+    @RequestMapping("profil_zwierzecia")
+    public void showProfilZwierzecia(Model model) {
+        var zwierze = zwierzeDAO.getZwierzeById(currentAnimal);
+        model.addAttribute("zwierze", zwierze);
+    }
 }

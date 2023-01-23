@@ -1,9 +1,12 @@
 package bdbt_project.SpringApplication.dbDAO;
 
 import bdbt_project.SpringApplication.dbtables.Adres;
+import bdbt_project.SpringApplication.dbtables.Klient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +35,13 @@ public class AdresDAO {
     }
 
     public void save(Adres adres) {
+        var insert = new SimpleJdbcInsert(jdbcTemplate);
+        insert.withTableName("ADRESY")
+                .usingColumns("nr_adresu", "kraj", "miasto",
+                        "kod_pocztowy", "ulica", "nr_domu",
+                        "nr_mieszkania");
+        var param = new BeanPropertySqlParameterSource(adres);
+        insert.execute(param);
     }
 
     public Adres get(int nr_adresu) {

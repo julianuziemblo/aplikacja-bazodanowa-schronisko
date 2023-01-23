@@ -51,4 +51,9 @@ public class ZwierzeDAO {
         }
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Zwierze.class));
     }
+
+    public Zwierze getZwierzeById(int id) {
+        String sql = "SELECT * FROM ZWIERZETA WHERE nr_zwerzecia='"+id+"'";
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Zwierze.class));
+    }
 }
