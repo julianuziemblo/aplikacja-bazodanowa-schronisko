@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Login Page</title>
+    <title>Zaloguj</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -38,13 +38,13 @@
                     <script>alert("ERROR: Podałeś złe email lub hasło!")</script>
                 </div>
 
-                <button class="btn btn-primary" type="submit" value="Sign In">Zaloguj</button>
+                <button class="btn" style="background-color:#9eff21" type="submit" value="Sign In">Zaloguj</button>
             </form>
             <br/>
             <br/>
             <p>Nie masz jeszcze konta? <a th:href="@{/register}">Zarejestruj się</a></p>
         </div>
-        <div class="col-md-4 mt-5">
+        <div class="col">
             <img src="assetes/other/login-cat.png" alt="login-cat" style="height:350"/>
         </div>
     </div>

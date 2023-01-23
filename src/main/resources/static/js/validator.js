@@ -28,6 +28,7 @@ function validate(event) {
     input.set("Data_urodzenia", document.getElementById("data_urodzenia").value);
     input.set("Plec", getPlecValue());
     input.set("Numer_telefonu", document.getElementById("nr_telefonu").value);
+    input.set("Email", document.getElementById("email").value);
     input.set("Haslo", document.getElementById("password").value);
     input.set("Potwierdz_haslo", document.getElementById("confirmPassword").value);
     input.set("Kraj", document.getElementById("kraj").value);

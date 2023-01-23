@@ -19,7 +19,7 @@
                 <div class="form-group" align="center">
                     <label style="font-size:30px" th:inline="text">
                         Witaj,
-                        <a style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
+                        <a style="color:lightskyblue"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
                         !
                     </label>
                     <br/>
@@ -32,7 +32,7 @@
             </div>
             <p class="text-secondary" style="font-size:3">(obrazek z <a href="https://thiscatdoesnotexist.com/">https://thiscatdoesnotexist.com/</a>)</p>
 
-            <button class="btn btn-primary" type="submit" onclick="var a=document.createElement('a');a.href='/zwierzeta';a.click()" value="zwierzeta">Przeglądaj pupili</button>
+            <button style="background-color:#9eff21;color=black" class="btn" type="submit" onclick="var a=document.createElement('a');a.href='/zwierzeta';a.click()" value="Sign Out">Przeglądaj pupili</button>
             <br/>
             <br/>
             <br/>

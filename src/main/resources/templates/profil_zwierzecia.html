@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- Navigation -->
-<header th:insert="fragments/navbars.html :: navbar-logged-user" ></header>
+<header th:insert="fragments/navbars.html :: navbar" ></header>
 <br/>
 <h1 align="center">Profil pupila</h1>
 <br/>
@@ -58,10 +58,14 @@
     <div class="row justify-content-center" th:each="z : ${zwierze}" align="center">
         <form th:action="@{selectAnimal}" th:object="${selected}" method="post">
             <input type="hidden" class="form-control" th:value="${z.nr_zwerzecia}" id="selected" name="selected">
-            <button type="submit" class="btn btn-primary btn-lg">Adoptuj</button>
+            <button type="submit" style="background-color:#9eff21" class="btn btn-lg">Adoptuj</button>
         </form>
     </div>
 </div>
+
+<br/>
+<br/>
+<br/>
 
 <script th:src="@{/js/validate_umowa.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>

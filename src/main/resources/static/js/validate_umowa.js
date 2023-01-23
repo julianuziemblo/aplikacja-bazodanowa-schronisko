@@ -11,6 +11,7 @@ function eventListener() {
 function validate(event) {
     event.preventDefault();
     var date = document.getElementById("date_input").value;
+    console.log(date);
     if(date == "" || date == null) {
         alert("Wypełnij pole `Data rozpoczęcia umowy`!");
         return false;

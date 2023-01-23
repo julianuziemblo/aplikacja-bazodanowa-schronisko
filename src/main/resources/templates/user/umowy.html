@@ -30,8 +30,8 @@
         <tbody>
             <tr th:each="ui : ${umowaInfo}">
                 <td th:text="${ui.imie}">Imię zwierzęcia</td>
-                <td th:text="${ui.data_podpisu}">Data podpisu</td>
-                <td th:text="${ui.data_waznosci}">Data ważności</td>
+                <td th:text="${ui.data_podpisu_formatted}">Data podpisu</td>
+                <td th:text="${ui.data_waznosci_formatted}">Data ważności</td>
                 <td th:text="${ui.imie_nazwisko}">Pracownik nadzorujący</td>
                 <td th:text="${ui.rodzajFormatted}">Status umowy</td>
             </tr>
@@ -39,9 +39,12 @@
     </table>
     <br/>
     <br/>
-    <a href="/zwierzeta" type="button" class="btn btn-primary">Adoptuj pupila</a>
+    <a href="/zwierzeta" type="button" style="background-color:#9eff21;color:black" class="btn">Adoptuj pupila</a>
 </div>
-
+<br/>
+<br/>
+<br/>
+<br/>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

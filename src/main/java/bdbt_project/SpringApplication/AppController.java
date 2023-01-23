@@ -4,9 +4,10 @@ import bdbt_project.SpringApplication.dbDAO.*;
 import bdbt_project.SpringApplication.dbtables.*;
 import bdbt_project.SpringApplication.dto.KlientPassword;
 
+import bdbt_project.SpringApplication.filters.Accept;
+import bdbt_project.SpringApplication.filters.Decline;
 import bdbt_project.SpringApplication.filters.GatunekFilter;
 import bdbt_project.SpringApplication.utility.RandomUtility;
-import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -52,6 +53,8 @@ public class AppController implements WebMvcConfigurer {
     private Integer currentAnimal = null;
     private GatunekFilter gatunekFilter = new GatunekFilter();
     private Umowa currUmowaParams = null;
+    private Accept accept = new Accept();
+    private Decline decline = new Decline();
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -191,7 +194,7 @@ public class AppController implements WebMvcConfigurer {
     @RequestMapping(value={"/getDate"}, method=RequestMethod.POST)
     public String getDateForUmowa(@ModelAttribute("data_rozpoczecia") Umowa umowa) {
         currUmowaParams.setData_podpisu(umowa.getData_podpisu());
-        // System.out.println(currUmowaParams);
+        System.out.println(currUmowaParams + " " + umowa.getData_podpisu());
         umowaDAO.save(currUmowaParams);
         return "user/main_user";
     }
@@ -211,12 +214,40 @@ public class AppController implements WebMvcConfigurer {
         model.addAttribute("listAdresy", adresy);
     }
 
+
+    @RequestMapping(value={"/getAccept"}, method=RequestMethod.POST)
+    public String mapAccept(@ModelAttribute("accept") Accept a) {
+        this.decline.setId("0");
+        this.accept = a;
+//        System.out.println("accept="+this.accept);
+//        System.out.println("decline="+this.decline);
+        return "redirect:/employee/emp_umowy";
+    }
+
+    @RequestMapping(value={"/getDecline"}, method=RequestMethod.POST)
+    public String mapDecline(@ModelAttribute("decline") Decline d) {
+        this.accept.setId("0");
+        this.decline = d;
+//        System.out.println("accept="+this.accept);
+//        System.out.println("decline="+this.decline);
+        return "redirect:/employee/emp_umowy";
+    }
+
     @RequestMapping("/employee/emp_umowy")
     public void showEmpUmowy(Model model) {
+        model.addAttribute("accept", accept);
+        model.addAttribute("decline", decline);
+        if(this.decline.getId() != null) {
+            umowaDAO.delete(Integer.parseInt(this.decline.getId()));
+        }
+        if(this.accept.getId() != null) {
+            umowaDAO.updateRodzaj(Integer.parseInt(this.accept.getId()), 'T');
+        }
         var umowy = umowaDAO.list();
         var zwierzeta = zwierzeDAO.getZwierzetaByUmowy(umowy);
         var klienci = klientDAO.getKlienciByUmowy(umowy);
         var umowyInfo = umowaDAO.listUmowaKlient(umowy, zwierzeta, klienci);
         model.addAttribute("umowyList", umowyInfo);
     }
+
 }

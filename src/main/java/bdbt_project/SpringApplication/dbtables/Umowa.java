@@ -15,6 +15,8 @@ public class Umowa {
     private int nr_klienta;
     private int nr_pracownika;
     private String rodzajFormatted;
+    private String data_podpisu_formatted;
+    private String data_waznosci_formatted;
 
     public Umowa(){}
 
@@ -55,6 +57,10 @@ public class Umowa {
     }
 
     public String getData_podpisu() {
+        return data_podpisu;
+    }
+
+    public String getData_podpisu_formatted() {
         if(Objects.equals(data_podpisu, "") || data_podpisu == null) return "-";
         return data_podpisu.split(" ")[0];
     }
@@ -64,6 +70,10 @@ public class Umowa {
     }
 
     public String getData_waznosci() {
+        return data_podpisu;
+    }
+
+    public String getData_waznosci_formatted() {
         if(Objects.equals(data_waznosci, "") || data_waznosci == null) return "-";
         return data_waznosci.split(" ")[0];
     }

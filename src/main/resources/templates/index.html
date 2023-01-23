@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Welcome Page</title>
+    <title>Strona główna</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
@@ -30,11 +30,11 @@
     <br/>
     <div class="container" align="center">
         <div class="card" style="width: 50rem; height: 37rem;">
-            <img class="card-img-top" src="assetes/other/lokalizacje.png" alt="Card image cap">
+            <a th:href="@{/lokacje}"><img class="card-img-top" src="assetes/other/lokalizacje.png" alt="Card image cap"></a>
             <div class="card-body">
                 <h5 class="card-title"><b>Lokalizacje</b></h5>
                 <p class="card-text">Przeglądaj lokalizacje naszych schronisk.</p>
-                <a th:href="@{/lokacje}" class="btn btn-primary">Przeglądaj</a>
+                <a style="background-color:#9eff21;color:black" th:href="@{/lokacje}" class="btn">Przeglądaj</a>
             </div>
         </div>
 
@@ -42,11 +42,11 @@
         <br/>
 
         <div class="card" style="width: 50rem; height: 37rem;">
-            <img class="card-img-top" src="assetes/other/schronisko.png" alt="Card image cap">
+            <a th:href="@{/zwierzeta}"><img class="card-img-top" src="assetes/other/schronisko.png" alt="Card image cap"></a>
             <div class="card-body">
                 <h5 class="card-title"><b>Nasi pupile</b></h5>
                 <p class="card-text">Zapoznaj się z listą naszych pupili. Zachęcamy do adopcji!</p>
-                <a th:href="@{/lokacje}" class="btn btn-primary">Przeglądaj</a>
+                <a th:href="@{/zwierzeta}" style="background-color:#9eff21;color:black" class="btn">Przeglądaj</a>
             </div>
         </div>
     </div>

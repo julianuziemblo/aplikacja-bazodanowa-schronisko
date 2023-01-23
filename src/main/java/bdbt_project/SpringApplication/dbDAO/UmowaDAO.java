@@ -66,10 +66,22 @@ public class UmowaDAO {
     public List<UmowaInfo> listUmowaKlient(List<Umowa> umowy, List<Zwierze> zwierzeta, List<Klient> klienci) {
         var umowyInfo = new ArrayList<UmowaInfo>();
         for(int i=0; i<umowy.size(); ++i) {
-            umowyInfo.add(new UmowaInfo(umowy.get(i), zwierzeta.get(i).getImie(),
-                    klienci.get(i).getImie() + " " + klienci.get(i).getNazwisko()));
+            if(umowy.get(i).getRodzaj() == 'P')
+                umowyInfo.add(new UmowaInfo(umowy.get(i), zwierzeta.get(i).getImie(),
+                        klienci.get(i).getImie() + " " + klienci.get(i).getNazwisko()));
         }
         return umowyInfo;
+    }
+
+    public void delete(Integer id) {
+        String sql = "DELETE FROM UMOWY WHERE nr_umowy='"+id+"'";
+        System.out.println(sql);
+        jdbcTemplate.update(sql);
+    }
+
+    public void updateRodzaj(Integer id, char rodzaj) {
+        String sql = "UPDATE UMOWY SET rodzaj='"+rodzaj+"' WHERE nr_umowy='"+id+"'";
+        jdbcTemplate.update(sql);
     }
 
 }

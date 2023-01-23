@@ -12,7 +12,7 @@
 
 <br/>
 <div class="container" align="center">
-    <h2>Moje umowy</h2>
+    <h2>Do zatwierdzenia:</h2>
     <br/>
     <table border="1" cellpadding="10">
         <!-- Table header -->
@@ -23,16 +23,27 @@
             <th>Data ważności</th>
             <th>Klient</th>
             <th>Status umowy</th>
+            <th>Zmień status umowy</th>
         </tr>
         </thead>
         <!-- Table body -->
         <tbody>
         <tr th:each="ui : ${umowyList}">
             <td th:text="${ui.imie}">Imię zwierzęcia</td>
-            <td th:text="${ui.data_podpisu}">Data podpisu</td>
-            <td th:text="${ui.data_waznosci}">Data ważności</td>
+            <td th:text="${ui.data_podpisu_formatted}">Data podpisu</td>
+            <td th:text="${ui.data_waznosci_formatted}">Data ważności</td>
             <td th:text="${ui.imie_nazwisko}">Klient</td>
             <td th:text="${ui.rodzajFormatted}">Status umowy</td>
+            <td>
+                <form id="form1" action="#" th:action="@{/getAccept}" th:object="${accept}" method="post">
+                    <input type="hidden" th:value="${ui.nr_umowy}" name="accept"/>
+                    <button type="submit" class="btn btn-link" name="accept" value="accept">Akceptuj</button>
+                </form>
+                <form id="form2" action="#" th:action="@{/getDecline}" th:object="${decline}" method="post">
+                    <input type="hidden" th:value="${ui.nr_umowy}" name="decline"/>
+                    <button type="submit" class="btn btn-link" name="decline" value="decline">Odrzuć</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
