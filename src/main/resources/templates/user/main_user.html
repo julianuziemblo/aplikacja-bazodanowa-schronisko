@@ -6,26 +6,33 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
-<body>
+<body class="bg-light">
 <!-- Navigation -->
 <header th:insert="fragments/navbars.html :: navbar-logged-user" ></header>
 
-<div class="container">
+<br/>
+<br/>
+<div class="container" align="center">
     <div class="row">
-        <div class="col-md-10 mt-5">
+        <div class="col">
             <form method="post" th:action="@{/index}">
-                <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome
+                <div class="form-group" align="center">
+                    <label style="font-size:30px" th:inline="text">
+                        Witaj,
                         <a style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
-                        to the main page!</label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
-                </div>
-
-                <button class="btn btn-primary" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
+                        !
+                    </label>
+                    <br/>
+                    <div style="font-size:20px">Oto twoja strona główna. Zapraszamy do adoptowania naszych pupili!</div>
+                    <br/>
+                    <button class="btn btn-primary" type="submit" onclick="var a=document.createElement('a');a.href='/zwierzeta';a.click()" value="Sign Out">Przeglądaj pupili
                 </button>
+                </div>
             </form>
         </div>
-
+        <br/>
+        <br/>
+        <br/>
     </div>
 </div>
 
