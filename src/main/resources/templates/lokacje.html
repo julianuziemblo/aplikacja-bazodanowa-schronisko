@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>Podpisywanie umowy</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar" ></header>
 
+<br/>
+<h1 align="center"><b>Nasze lokalizacje</b></h1>
+<br/>
+<br/>
+
+<div class="container">
+    <div class="card mb-3 bg-dark text-white" th:each="s: ${listSchroniska}">
+        <img class="card-img-top" th:src="@{${'assetes/locations/'+ s.nr_schroniska +'.png'}}" alt="Schronisko">
+        <div class="card-body">
+            <h5 class="card-title font-weight-bold" th:text="${s.nazwa}"></h5>
+            <p class="card-text">Jest to na razie nasza jedyna lokalizacja, ale mamy nadzieję na rozwinięcie
+                działalności, żeby móc pomagać jeszcze większej liczbie pupili.</p>
+            <p class="card-text" >Data założenia: <span th:text="${s.data_zalozenia}" ></span></p>
+            <div class="card-body" th:each="a: ${listAdresy}">
+                <h6 class="card-title"><b>Lokalizacja:</b></h6>
+                <p class="card-text">
+                    Ulica
+                    <span th:text="${a.ulica}"></span>
+                    <span th:text="${a.nr_domu}"></span>,
+                    <span th:text="${a.kod_pocztowy}"></span>
+                    <span th:text="${a.miasto}"></span>,
+                    <span th:text="${a.kraj}"></span>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>
 </html>

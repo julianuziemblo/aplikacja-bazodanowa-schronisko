@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Footer</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+
+<div th:fragment="footer-all">
+    <!-- Footer -->
+    <footer class="text-center text-lg-start bg-light text-muted">
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom" style="background-color: rgba(0, 0, 0, 0.05);">
+
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <br/>
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3"></i>Schronisko <span style="color:blue">Zakątek zwierzątek</span>
+                        </h6>
+                        <p>
+                            Dziękujemy za odwiedziny naszej strony. Szczególne podziękowania dla p. mgr inż. Tomasza
+                            Mrozka, bez którego ten projekt by nie powstał.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Autorzy:
+                        </h6>
+                        <p>
+                            <a href="#" class="text-reset">Julian Uziembło</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-reset">Konrad Majewski</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Przydatne linki:
+                        </h6>
+                        <p>
+                            <a th:href="@{/}" class="text-reset">Strona główna</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/zwierzeta}" class="text-reset">Nasi pupile</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/lokacje}" class="text-reset">Lokalizacje</a>
+                        </p>
+                        <p>
+                            <a th:href="@{/login}" class="text-reset">Zaloguj</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold mb-4">Kontakt</h6>
+                        <p><i class="fas fa-home me-3"></i> Legionowo, Warszawa, Polska</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            schronisko.zakatek-zwierzatek@legionowo.pl
+                        </p>
+                        <p><i class="fas fa-phone me-3"></i> +48 696 346 712</p>
+                        <p><i class="fas fa-print me-3"></i> (22) 784 726 27</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2021 Copyright:
+            <a class="text-reset fw-bold" th:href="@{/}">localhost:8080</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+</div>
+
+</body>
+</html>

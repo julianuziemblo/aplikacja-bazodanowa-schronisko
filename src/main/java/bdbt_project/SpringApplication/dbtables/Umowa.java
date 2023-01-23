@@ -56,7 +56,7 @@ public class Umowa {
 
     public String getData_podpisu() {
         if(Objects.equals(data_podpisu, "") || data_podpisu == null) return "-";
-        return data_podpisu;
+        return data_podpisu.split(" ")[0];
     }
 
     public void setData_podpisu(String data_podpisu) {
@@ -65,7 +65,7 @@ public class Umowa {
 
     public String getData_waznosci() {
         if(Objects.equals(data_waznosci, "") || data_waznosci == null) return "-";
-        return data_waznosci;
+        return data_waznosci.split(" ")[0];
     }
 
     public void setData_waznosci(String data_waznosci) {

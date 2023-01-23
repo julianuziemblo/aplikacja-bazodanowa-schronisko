@@ -6,71 +6,60 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
-
-<!-- <body th:style="'background: url(/assets/img/img.png) no-repeat center center fixed;'"> -->
-
-
-<!--<style th:inline="text">-->
-<!--    body{-->
-<!--        background: url([[@{/assets/img/img.png}]])-->
-<!--        no-repeat center center fixed;-->
-<!--    }-->
-<!--</style>-->
-
 <body>
 <!-- Navigation -->
 <header th:insert="fragments/navbars.html :: navbar" ></header>
 
+<div class="container" align="center">
+    <div class="container" align="center">
+        <div class="row">
+            <div class="col-md-10 mt-5">
+                <label style="font-size:30px">Witaj w schronisku zwierząt <span style="color:blue">Zakątek zwierzątek</span>!</label>
+                <div style="font-size:20px">Aby zalogować się na konto, kliknij <a th:href="@{/main}"><b>tutaj</b></a> lub
+                    w prawym górnym rogu strony.
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="container" align="center">
+        <div class="card" style="width: 50rem; height: 37rem;">
+            <img class="card-img-top" src="assetes/other/lokalizacje.png" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title"><b>Lokalizacje</b></h5>
+                <p class="card-text">Przeglądaj lokalizacje naszych schronisk.</p>
+                <a th:href="@{/lokacje}" class="btn btn-primary">Przeglądaj</a>
+            </div>
+        </div>
 
-<!--Using images in page    -->
-<!-- <img th:src="@{/assets/img/img.png}" alt="Image" class="img-fluid"> -->
+        <br/>
+        <br/>
 
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 mt-5">
-            <label style="font-size:30px">Schronisko dla zwierząt <span style="color:blue">Zakątek</span></label>
-            <div style="font-size:20px">Aby zalogować się na konto, kliknij <a th:href="@{/main}"><b>tutaj</b></a> lub
-                w prawym górnym rogu strony.
+        <div class="card" style="width: 50rem; height: 37rem;">
+            <img class="card-img-top" src="assetes/other/schronisko.png" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title"><b>Nasi pupile</b></h5>
+                <p class="card-text">Zapoznaj się z listą naszych pupili. Zachęcamy do adopcji!</p>
+                <a th:href="@{/lokacje}" class="btn btn-primary">Przeglądaj</a>
             </div>
         </div>
     </div>
 </div>
-
-<!--<div align="center">
-    <h1>Sales Records</h1>
-
-    <table border="1" cellpadding="10">
-
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Item Name</th>
-            <th>Quantity</th>
-            <th>Amount</th>
-            <th>Action</th>
-
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="sale : ${listSale}">
-            <td th:text="${sale.id}">ID</td>
-            <td th:text="${sale.item}">Item Name</td>
-            <td th:text="${sale.quantity}">Quantity</td>
-            <td th:text="${sale.amount}">Amount</td>
-        </tr>
-        </tbody>
-
-    </table>
-
-</div>-->
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>
 </html>
 

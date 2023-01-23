@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -42,6 +43,15 @@ public class AdresDAO {
                         "nr_mieszkania");
         var param = new BeanPropertySqlParameterSource(adres);
         insert.execute(param);
+    }
+
+    public List<Adres> listAdresyForSchroniskaId(List<Integer> ids) {
+        var lista = new ArrayList<Adres>();
+        for(var id: ids) {
+            String sql = "SELECT * FROM ADRESY WHERE nr_adresu='"+id+"'";
+            lista.add(jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Adres.class)));
+        }
+        return lista;
     }
 
     public Adres get(int nr_adresu) {

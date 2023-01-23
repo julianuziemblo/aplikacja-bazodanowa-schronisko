@@ -33,7 +33,7 @@ public class Schronisko {
     }
 
     public String getData_zalozenia() {
-        return data_zalozenia;
+        return data_zalozenia.split(" ")[0];
     }
 
     public void setData_zalozenia(String data_zalozenia) {

@@ -37,9 +37,7 @@
 <div class="container" align="center">
     <div class="card" style="width: 18rem;" th:each="zw: ${listZwierzeta}">
         <div class="card-body">
-
             <img th:src="@{${'assetes/animals/'+ zw.nr_zwerzecia +'.png'}}" width="200px"/>
-
             <br/>
             <h4 class="card-title" th:text="${zw.imie}"><b>Imię</b></h4>
             <p><label for="rasa">Rasa: </label>
@@ -58,6 +56,8 @@
                 <button type="submit" class="btn btn-primary">Adoptuj</button>
             </form>
         </div>
+        <br/>
+        <br/>
     </div>
     <br/>
     <br/>
@@ -67,5 +67,7 @@
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>
 </html>

@@ -101,14 +101,17 @@
     </div>
     <br/>
     <br/>
-    <button type="submit" id="sub">Zatwierdź</button>
+    <button class="btn btn-primary" type="submit" id="sub">Zatwierdź</button>
 </form>
 </div>
-
+<br/>
+<br/>
+<br/>
 <script th:src="@{/js/validator.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>
 </html>

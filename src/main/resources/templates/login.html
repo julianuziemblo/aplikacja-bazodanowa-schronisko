@@ -13,38 +13,52 @@
 <!-- Navigation -->
 <header th:insert="fragments/navbars.html :: navbar" ></header>
 
-<div class="container">
-    <div class="row">
+<div class="container" align="center">
+    <div class="row" align="center">
         <div class="col-md-4 mt-5">
-
+            <h1 align="center">Zaloguj się</h1>
+            <br/>
+            <br/>
+            <br/>
+<!--            <br/>-->
+<!--            <br/>-->
             <form method="post" th:action="@{/login}">
-
                 <div class="form-group" th:action="@{/loginHolder}">
                     <label for="login">Login:</label>
-                    <input id="login" th:object="${login}" type="text" placeholder="Login" autocomplete="off" class="form-control" name="username"/>
+                    <input id="login" th:object="${login}" type="text" placeholder="Email" autocomplete="off" class="form-control" name="username"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label for="password">Hasło:</label>
                     <input id="password" type="password" placeholder="Hasło" autocomplete="off" class="form-control" name="password"/>
                 </div>
 
                 <div th:if="${param.error}" style="color:red; margin-bottom:15px">
-                    ERROR: Invalid username or password!
-                    <script>alert("ERROR: Invalid username or password!")</script>
+                    ERROR: Podałeś złe email lub hasło!
+                    <script>alert("ERROR: Podałeś złe email lub hasło!")</script>
                 </div>
 
-                <button class="btn btn-primary" type="submit" value="Sign In">Login</button>
-
+                <button class="btn btn-primary" type="submit" value="Sign In">Zaloguj</button>
             </form>
+            <br/>
+            <br/>
+            <p>Nie masz jeszcze konta? <a th:href="@{/register}">Zarejestruj się</a></p>
+        </div>
+        <div class="col-md-4 mt-5">
+            <img src="assetes/other/login-cat.png" alt="login-cat" style="height:350"/>
         </div>
     </div>
 </div>
 
+<br/>
+<br/>
+<br/>
+<br/>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>
 </html>
