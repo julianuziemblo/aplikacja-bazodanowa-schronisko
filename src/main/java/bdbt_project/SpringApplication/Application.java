@@ -1,14 +1,12 @@
 package bdbt_project.SpringApplication;
 
-import bdbt_project.SpringApplication.dbDAO.PracownikDAO;
 import bdbt_project.SpringApplication.utility.JSONUtility;
 
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.IOException;
 import java.util.HashMap;
