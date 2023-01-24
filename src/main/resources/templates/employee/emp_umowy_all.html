@@ -2,7 +2,7 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Oczekujące</title>
+    <title>Umowy</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
@@ -12,7 +12,11 @@
 
 <br/>
 <div class="container" align="center">
-    <h2>Do zatwierdzenia:</h2>
+    <h2>Umowy</h2>
+    <br/>
+    <a th:href="@{/employee/emp_umowy}" type="button" class="btn" style="background-color:#9eff21;color:black">Oczekujące</a>
+    <br/>
+    <br/>
     <br/>
     <table border="1" cellpadding="10">
         <!-- Table header -->
@@ -35,13 +39,9 @@
             <td th:text="${ui.imie_nazwisko}">Klient</td>
             <td th:text="${ui.rodzajFormatted}">Status umowy</td>
             <td>
-                <form id="form1" action="#" th:action="@{/getAccept}" th:object="${accept}" method="post">
-                    <input type="hidden" th:value="${ui.nr_umowy}" name="accept"/>
-                    <button type="submit" class="btn btn-link" name="accept" value="accept">Akceptuj</button>
-                </form>
-                <form id="form2" action="#" th:action="@{/getDecline}" th:object="${decline}" method="post">
-                    <input type="hidden" th:value="${ui.nr_umowy}" name="decline"/>
-                    <button type="submit" class="btn btn-link" name="decline" value="decline">Odrzuć</button>
+                <form id="form" action="#" th:action="@{/getUmowa}" th:object="${select}" method="post">
+                    <input type="hidden" th:value="${ui.nr_umowy}" name="select"/>
+                    <button type="submit" class="btn btn-link" name="select" value="select">Podgląd</button>
                 </form>
             </td>
         </tr>

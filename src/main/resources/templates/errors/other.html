@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>Error Page</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
 <body>
-
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar" ></header>
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <form method="post" th:action="@{/index}">
+                <div class="form-group">
+                    <div><b><p style="font-size:30px">Błąd</p></b></div>
+                    <div><p style="font-size:24px">Wystąpił nieznany błąd</p></div>
+                </div>
+                <button style="background-color:#9eff21;color=black" class="btn" type="submit" value="Sign In">Powrót</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>
 </html>

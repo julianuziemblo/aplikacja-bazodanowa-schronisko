@@ -15,6 +15,7 @@ public class Zwierze {
     private String nazwa_karmy;
     private String data_przyjecia;
     private int nr_schroniska;
+    private String data_przyjecia_formatted;
     private String photosImagePath;
 
     public Zwierze(){}
@@ -131,6 +132,11 @@ public class Zwierze {
 
     public String getData_przyjecia() {
         return data_przyjecia;
+    }
+
+    public String getData_przyjecia_formatted() {
+        if(Objects.equals(data_przyjecia, "") || data_przyjecia == null) return "-";
+        return data_przyjecia.split(" ")[0];
     }
 
     public void setData_przyjecia(String data_przyjecia) {

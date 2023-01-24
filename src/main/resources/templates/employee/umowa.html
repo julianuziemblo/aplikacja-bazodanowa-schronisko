@@ -2,21 +2,21 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Podpisywanie umowy</title>
+    <title>Umowa</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
 <!-- Navigation -->
-<header th:insert="fragments/navbars.html :: navbar-logged-user" ></header>
+<header th:insert="fragments/navbars.html :: navbar-logged-emp" ></header>
 
 
 <br/>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm bg-secondary">
+        <div class="col-sm bg-secondary" th:each="u : ${umowa}">
             <br/>
-            <h1 align="center" style="color:white"><b>Nowa umowa</b></h1>
+            <h1 align="center" style="color:white"><b>Umowa #<span th:text="${u.nr_umowy}"></span></b></h1>
             <br/>
         </div>
     </div>
@@ -57,24 +57,28 @@
             </table>
         </div>
         <div class="col">
-            <h3 align="center">Dane pracownika nadzorującego</h3>
+            <h3 align="center">Dane klienta</h3>
             <br/>
-            <table border="0" cellpadding="10" th:each="p : ${pracownik}">
+            <table border="0" cellpadding="10" th:each="k : ${klient}">
                 <tr>
                     <td>Imię:</td>
-                    <td th:text="${p.imie}"></td>
+                    <td th:text="${k.imie}"></td>
                 </tr>
                 <tr>
                     <td>Nazwisko:</td>
-                    <td th:text="${p.nazwisko}"></td>
+                    <td th:text="${k.nazwisko}"></td>
                 </tr>
                 <tr>
                     <td>E-mail:</td>
-                    <td th:text="${p.email}"></td>
+                    <td th:text="${k.email}"></td>
                 </tr>
                 <tr>
                     <td>Numer telefonu:</td>
-                    <td th:text="${p.nr_telefonu}"></td>
+                    <td th:text="${k.nr_telefonu}"></td>
+                </tr>
+                <tr>
+                    <td>Pesel:</td>
+                    <td th:text="${k.pesel}"></td>
                 </tr>
             </table>
         </div>
@@ -86,17 +90,7 @@
             <br/>
             <div class="col-sm bg-secondary" align="center">
                 <br/>
-                <form id="form" action="#" th:action="@{/getDate}" th:object="${data_rozpoczecia}" method="post">
-                    <h3 style="color:white">Data rozpoczęcia umowy: </h3>
-                    <h5 style="color:lightgray">(Data odbioru pupila)</h5>
-
-                    <input th:field="*{data_podpisu}" type="date" id="date_input"/>
-                    <script th:src="@{/js/validate_umowa.js}"></script>
-                    <br/>
-                    <br/>
-                    <button type="submit" style="background-color:#9eff21" class="btn btn-lg" id="sub">Podpisz</button>
-                    <script th:src="@{/js/validate_umowa.js}"></script>
-                </form>
+                <a th:href="@{/employee/emp_umowy_all}" type="button" class="btn btn-lg" style="background-color:#9eff21;color=black">Ok</a>
                 <br/>
             </div>
         </div>

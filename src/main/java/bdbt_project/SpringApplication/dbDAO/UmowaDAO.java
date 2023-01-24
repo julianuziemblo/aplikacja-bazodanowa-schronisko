@@ -66,11 +66,26 @@ public class UmowaDAO {
     public List<UmowaInfo> listUmowaKlient(List<Umowa> umowy, List<Zwierze> zwierzeta, List<Klient> klienci) {
         var umowyInfo = new ArrayList<UmowaInfo>();
         for(int i=0; i<umowy.size(); ++i) {
+            umowyInfo.add(new UmowaInfo(umowy.get(i), zwierzeta.get(i).getImie(),
+                        klienci.get(i).getImie() + " " + klienci.get(i).getNazwisko()));
+        }
+        return umowyInfo;
+    }
+
+    public List<UmowaInfo> listUmowaKlientNotSigned(List<Umowa> umowy, List<Zwierze> zwierzeta, List<Klient> klienci) {
+
+        var umowyInfo = new ArrayList<UmowaInfo>();
+        for(int i=0; i<umowy.size(); ++i) {
             if(umowy.get(i).getRodzaj() == 'P')
                 umowyInfo.add(new UmowaInfo(umowy.get(i), zwierzeta.get(i).getImie(),
                         klienci.get(i).getImie() + " " + klienci.get(i).getNazwisko()));
         }
         return umowyInfo;
+    }
+
+    public Umowa getUmowaById(int id) {
+        String sql = "SELECT * FROM UMOWY WHERE nr_umowy='"+id+"'";
+        return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Umowa.class));
     }
 
     public void delete(Integer id) {

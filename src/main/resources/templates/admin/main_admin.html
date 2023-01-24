@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Main Admin Page</title>
+    <title>Admin</title>
 
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -11,35 +11,35 @@
 
 <!-- Navigation -->
 <div id="nav-placeholder"></div>
-<header th:insert="fragments/navbars.html :: navbar"></header>
+<header th:insert="fragments/navbars.html :: navbar-logged-admin"></header>
 
 <br/>
 <br/>
-<div class="container">
+<div class="container" align="center">
     <div class="row">
-
-        <div class="col-md-10 mt-5">
+        <div class="col">
             <form method="post" th:action="@{/index}">
                 <div class="form-group">
-                    <label style="font-size:30px" th:inline="text">Welcome <a
-                            style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
-                        to the main page!</label>
-                    <div style="font-size:20px">If you want to logout, click "Logout" button under this text.</div>
+                    <label style="font-size:30px" th:inline="text">Witaj
+                        <a style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
+                    !</label>
+                    <div style="font-size:20px">Przeglądaj pracowników:</div>
                 </div>
-
-                <button class="btn btn-primary" type="submit" onclick="successfullyLogout()" value="Sign Out">Logout
-                </button>
+                <a th:href="@{/admin/employees}" type="button" style="background-color:#9eff21;color:black" class="btn">Pracownicy</a>
             </form>
         </div>
 
     </div>
 </div>
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/script.js}"></script>
 
 <footer th:insert="fragments/footers.html :: footer-all" ></footer>
 </body>

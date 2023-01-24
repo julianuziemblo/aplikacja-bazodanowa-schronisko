@@ -16,6 +16,7 @@ public class Pracownik {
     private Integer nr_adresu;
     private int nr_stanowiska;
     public static int ZWYKLY_PRACOWNIK = 1;
+    private String stanowisko_formatted;
 
     public Pracownik(){}
 
@@ -40,6 +41,12 @@ public class Pracownik {
         this.nr_schroniska = nr_schroniska;
         this.nr_adresu = nr_adresu;
         this.nr_stanowiska = nr_stanowiska;
+    }
+
+    public String getStanowisko_formatted() {
+        if(this.nr_stanowiska == 3) return "Weterynarz";
+        if(this.nr_stanowiska == 2) return "Rakarz";
+        return "Zwykły pracownik";
     }
 
     public int getNr_pracownika() {

@@ -3,12 +3,12 @@ package bdbt_project.SpringApplication.filters;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UmowaFilter implements ValueFilter<String> {
+public class PracownikFilter implements ValueFilter<String> {
     private String id;
 
-    public UmowaFilter(){}
+    public PracownikFilter(){}
 
-    public UmowaFilter(String id) {
+    public PracownikFilter(String id) {
         this.id = id;
     }
 
@@ -33,4 +33,5 @@ public class UmowaFilter implements ValueFilter<String> {
                 "pies='" + id + '\'' +
                 '}';
     }
+
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Pracownicy</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar-logged-admin" ></header>
+
+<br/>
+<div class="container" align="center">
+    <h2>Pracownicy</h2>
+    <br/>
+    <br/>
+    <a th:href="@{/admin/add_employee}" type="button" class="btn" style="background-color:#9eff21;color:black">Dodaj pracownika</a>
+    <br/>
+    <br/>
+    <table border="1" cellpadding="10">
+        <!-- Table header -->
+        <thead>
+        <tr> <!-- Table row -->
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Data urodzenia</th>
+            <th>PESEL</th>
+            <th>Email</th>
+            <th>Numer telefonu</th>
+            <th>Numer konta</th>
+            <th>Stanowisko</th>
+            <th>Zmień status pracownika</th>
+        </tr>
+        </thead>
+        <!-- Table body -->
+        <tbody>
+        <tr th:each="p : ${pracownicyList}">
+            <td th:text="${p.imie}">Imię</td>
+            <td th:text="${p.nazwisko}">Nazwisko</td>
+            <td th:text="${p.data_urodzenia}">Data urodzenia</td>
+            <td th:text="${p.pesel}">PESEL</td>
+            <td th:text="${p.email}">Email</td>
+            <td th:text="${p.nr_telefonu}">Numer telefonu</td>
+            <td th:text="${p.nr_konta}">Numer konta</td>
+            <td th:text="${p.stanowisko_formatted}">Stanowisko</td>
+            <td>
+                <form id="form1" action="#" th:action="@{/fire}" th:object="${fired}" method="post">
+                    <input type="hidden" th:value="${p.nr_pracownika}" name="fired"/>
+                    <button type="submit" id="sub" class="btn btn-link" name="fired" value="fired">Wyrzuć</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+</div>
+
+<script th:src="@{/js/fire.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
+</body>
+</html>

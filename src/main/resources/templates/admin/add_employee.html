@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Dodaj pracownika</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+<body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar-logged-admin" ></header>
+
+<div class="container" align="center">
+    <!-- Page header -->
+    <h1>Dodaj pracownika</h1>
+
+    <br/>
+    <h2>Dane osobowe</h2>
+
+    <form id="form" action="#" th:action="@{/savePracownik}" th:object="${pracownik}" method="post">
+        <div th:object="${pracownik}">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Imię <span style="color:crimson">*</span></td>
+                    <td><input id="imie" type="text" pattern="[^0-9]" th:field="*{imie}" aria-required="true" /></td>
+                </tr>
+                <tr>
+                    <td>Nazwisko <span style="color:crimson">*</span></td>
+                    <td><input id="nazwisko" type="text" pattern="[^0-9]" title="Do 30 znaków" th:field="*{nazwisko}" aria-required="true"/></td>
+                </tr>
+                <tr>
+                    <td>Data urodzenia <span style="color:crimson">*</span></td>
+                    <td><input id="data_urodzenia" type="date" th:field="*{data_urodzenia}" aria-required="true"/></td>
+                </tr>
+                <tr>
+                    <td>Data zatrudnienia <span style="color:crimson">*</span></td>
+                    <td><input id="data_zatrudnienia" type="date" th:field="*{data_zatrudnienia}" aria-required="true"/></td>
+                </tr>
+                <tr>
+                    <td>Płeć <span style="color:crimson">*</span></td>
+                    <td>
+                        <fieldset id="plec" th:field="*{plec}" aria-required="true">
+                            <input type="radio" value="K" th:value="K" id="K" name="plec"/>
+                            <label for="K">Kobieta</label>
+                            <input type="radio" value="M" th:value="M" id="M" name="plec"/>
+                            <label for="M">Mężczyzna</label>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Numer telefonu <span style="color:crimson">*</span></td>
+                    <td><input id="nr_telefonu" type="tel" th:field="*{nr_telefonu}" aria-required="false"/></td>
+                </tr>
+                <tr>
+                    <td>E-mail <span style="color:crimson">*</span></td>
+                    <td><input id="email" type="email" th:field="*{email}" aria-required="true"/></td>
+                </tr>
+                <tr>
+                    <td>Pesel </td>
+                    <td><input id="pesel" type="text" pattern="[0-9]" th:field="*{pesel}" aria-required="false"/></td>
+                </tr>
+                <tr>
+                    <td>Numer konta </td>
+                    <td><input id="nr_konta" type="text" pattern="[0-9]" th:field="*{nr_konta}" aria-required="true"/></td>
+                </tr>
+                <tr>
+                    <td>Sposób wypłaty <span style="color:crimson">*</span></td>
+                    <td>
+                        <fieldset id="sposob_wyplaty" th:field="*{sposob_wyplaty}">
+                            <input type="radio" value="K" th:value="K" id="K1" name="K"/>
+                            <label for="K1">Na konto</label>
+                            <input type="radio" value="G" th:value="G" id="G" name="G"/>
+                            <label for="G">Gotówka</label>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Stanowisko <span style="color:crimson">*</span></td>
+                    <td>
+                        <fieldset id="nr_stanowiska" th:field="*{nr_stanowiska}" aria-required="true">
+                            <input type="radio" value="1" th:value="1" id="1" name="nr_stanowiska"/>
+                            <label for="K">Zwykły pracownik</label>
+                            <input type="radio" value="2" th:value="2" id="2" name="nr_stanowiska"/>
+                            <label for="M">Rakarz</label>
+                            <input type="radio" value="3" th:value="3" id="3" name="nr_stanowiska"/>
+                            <label for="M">Weterynarz</label>
+                        </fieldset>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <h2>Dane adresowe</h2>
+        <div th:object="${adres}">
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>Kraj <span style="color:crimson">*</span></td>
+                    <td><input id="kraj" type="text" th:field="*{kraj}" aria-required="true"></td>
+                </tr>
+                <tr>
+                    <td>Miasto <span style="color:crimson">*</span></td>
+                    <td><input id="miasto" type="text" th:field="*{miasto}" aria-required="true"></td>
+                </tr>
+                <tr>
+                    <td>Kod pocztowy<span style="color:crimson">*</span></td>
+                    <td><input id="kod_pocztowy" type="text" title="xx-xxx" th:field="*{kod_pocztowy}" aria-required="true"></td>
+                </tr>
+                <tr>
+                    <td>Ulica <span style="color:crimson">*</span></td>
+                    <td><input id="ulica" type="text" th:field="*{ulica}" aria-required="true"></td>
+                </tr>
+                <tr>
+                    <td>Numer domu <span style="color:crimson">*</span></td>
+                    <td><input id="nr_domu" type="text" th:field="*{nr_domu}" aria-required="true"></td>
+                </tr>
+                <tr>
+                    <td>Numer mieszkania</td>
+                    <td><input id="nr_mieszkania" type="text" th:field="*{nr_mieszkania}" aria-required="false"></td>
+                </tr>
+            </table>
+        </div>
+        <br/>
+        <br/>
+        <button class="btn" style="background-color:#9eff21" type="submit" id="sub">Zatwierdź</button>
+    </form>
+</div>
+<br/>
+<br/>
+<br/>
+<script th:src="@{/js/validator_p.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
+</body>
+</html>

@@ -4,15 +4,14 @@ import bdbt_project.SpringApplication.dbDAO.*;
 import bdbt_project.SpringApplication.dbtables.*;
 import bdbt_project.SpringApplication.dto.KlientPassword;
 
-import bdbt_project.SpringApplication.filters.Accept;
-import bdbt_project.SpringApplication.filters.Decline;
-import bdbt_project.SpringApplication.filters.GatunekFilter;
+import bdbt_project.SpringApplication.filters.*;
 import bdbt_project.SpringApplication.utility.RandomUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,6 +54,8 @@ public class AppController implements WebMvcConfigurer {
     private Umowa currUmowaParams = null;
     private Accept accept = new Accept();
     private Decline decline = new Decline();
+    private UmowaFilter umowaFilter = new UmowaFilter();
+    private PracownikFilter pracownikFilter = new PracownikFilter();
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
@@ -73,6 +74,10 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/lokacje").setViewName("lokacje");
         registry.addViewController("/main_employee").setViewName("employee/main_employee");
         registry.addViewController("/emp_umowy").setViewName("employee/emp_umowy");
+        registry.addViewController("/emp_umowy_all").setViewName("employee/emp_umowy_all");
+        registry.addViewController("/umowa").setViewName("employee/umowa");
+        registry.addViewController("/employees").setViewName("admin/employees");
+        registry.addViewController("/add_employee").setViewName("admin/add_employee");
     }
 
     @Controller
@@ -246,8 +251,72 @@ public class AppController implements WebMvcConfigurer {
         var umowy = umowaDAO.list();
         var zwierzeta = zwierzeDAO.getZwierzetaByUmowy(umowy);
         var klienci = klientDAO.getKlienciByUmowy(umowy);
+        var umowyInfo = umowaDAO.listUmowaKlientNotSigned(umowy, zwierzeta, klienci);
+        model.addAttribute("umowyList", umowyInfo);
+    }
+
+    @RequestMapping("/employee/emp_umowy_all")
+    public void showEmpUmowyAll(Model model) {
+        model.addAttribute("select", umowaFilter);
+        var umowy = umowaDAO.list();
+        var zwierzeta = zwierzeDAO.getZwierzetaByUmowy(umowy);
+        var klienci = klientDAO.getKlienciByUmowy(umowy);
         var umowyInfo = umowaDAO.listUmowaKlient(umowy, zwierzeta, klienci);
         model.addAttribute("umowyList", umowyInfo);
+    }
+
+    @RequestMapping(value={"/getUmowa"}, method=RequestMethod.POST)
+    public String getUmowa(@ModelAttribute("select") UmowaFilter umowaFilter) {
+        this.umowaFilter = umowaFilter;
+        return "redirect:/employee/umowa";
+    }
+
+    @RequestMapping("/employee/umowa")
+    public void showEmpUmowa(Model model) {
+        var umowa = umowaDAO.getUmowaById(Integer.parseInt(umowaFilter.getId()));
+        var nr_zwierzecia = umowa.getNr_zwerzecia();
+        var nr_klienta = umowa.getNr_klienta();
+        var zwierze = zwierzeDAO.getZwierzeById(nr_zwierzecia);
+        var klient = klientDAO.getByNrKlienta(nr_klienta);
+        model.addAttribute("umowa", umowa);
+        model.addAttribute("zwierze", zwierze);
+        model.addAttribute("klient", klient);
+    }
+
+    @RequestMapping("/admin/employees")
+    public void showPracownicy(Model model) {
+        model.addAttribute("fired", pracownikFilter);
+        if(this.pracownikFilter.getSelected().size() != 0) {
+            pracownikDAO.delete(Integer.parseInt(this.pracownikFilter.getSelected().get(0)));
+        }
+        var pracownicyList = pracownikDAO.list();
+        model.addAttribute("pracownicyList", pracownicyList);
+    }
+
+    @RequestMapping(value={"/fire"}, method=RequestMethod.POST)
+    public String getFired(@ModelAttribute("fired") PracownikFilter pracownikFilter) {
+        this.pracownikFilter = pracownikFilter;
+        return "redirect:/admin/employees";
+    }
+
+    @RequestMapping("/admin/add_employee")
+    public void showAddEmployee(Model model) {
+        var pracownik = new Pracownik();
+        var adres = new Adres();
+        model.addAttribute("adres", adres);
+        model.addAttribute("pracownik", pracownik);
+    }
+
+    @RequestMapping(value="/savePracownik", method=RequestMethod.POST)
+    public String savePracownik(@ModelAttribute("pracownik") Pracownik pracownik,
+                                 @ModelAttribute("adres") Adres adres) {
+        adresDAO.save(adres);
+        var nr_adresu = adresDAO.getHighestIdAddress().getNr_adresu();
+        pracownik.setNr_adresu(nr_adresu);
+        pracownik.setSposob_wyplaty('G');
+        pracownik.setNr_schroniska(1);
+        pracownikDAO.save(pracownik);
+        return "redirect:/admin/employees";
     }
 
 }

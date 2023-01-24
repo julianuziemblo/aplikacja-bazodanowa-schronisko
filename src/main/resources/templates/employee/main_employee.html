@@ -18,14 +18,14 @@
             <form method="post" th:action="@{/index}">
                 <div class="form-group" align="center">
                     <label style="font-size:30px" th:inline="text">Witaj,
-                        <a style="color:lightskyblue; text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
+                        <a style="color:lightskyblue;text-transform:capitalize"><b>[[${#httpServletRequest.remoteUser}]]</b></a>
                         !</label>
                     <div style="font-size:20px" align="center">Zacznij przeglądać umowy:</div>
                     <div style="font-size:10px; color:#f1f1f1" align="center">DO ROBOTY</div>
                 </div>
                 <br/>
                 <br/>
-                <a th:href="@{/employee/emp_umowy}" type="button" class="btn btn-primary">Umowy</a>
+                <a th:href="@{/employee/emp_umowy_all}" type="button" style="background-color:#9eff21;color:black" class="btn">Umowy</a>
             </form>
             <br/>
             <br/>
