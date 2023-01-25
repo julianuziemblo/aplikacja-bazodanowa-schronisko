@@ -7,6 +7,8 @@ import bdbt_project.SpringApplication.filters.GatunekFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +66,32 @@ public class ZwierzeDAO {
             zwierzeta.add(getZwierzeById(umowa.getNr_zwerzecia()));
         }
         return zwierzeta;
+    }
+
+    public void save(Zwierze z) {
+        var insert = new SimpleJdbcInsert(jdbcTemplate);
+        System.out.println(z.getPlec());
+        insert.withTableName("ZWIERZETA")
+                .usingColumns("nr_zwerzecia", "imie", "gatunek",
+                        "rasa", "plec", "rozmiar",
+                        "koszt_utrzymania", "umaszczenie",
+                        "nazwa_karmy", "data_przyjecia", "nr_schroniska");
+        var param = new BeanPropertySqlParameterSource(z);
+        insert.execute(param);
+    }
+
+    public Zwierze getMostRecentZwierzeId() {
+        String sql = "SELECT * FROM ZWIERZETA ORDER BY nr_zwerzecia DESC";
+        return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Zwierze.class)).get(0);
+    }
+
+    public List<Zwierze> getAvailableOnly(List<Zwierze> zwierzeta) {
+        var newList = new ArrayList<Zwierze>();
+
+        for(var z: zwierzeta) {
+            if(z.isCzyWSchronisku()) newList.add(z);
+        }
+
+        return newList;
     }
 }

@@ -15,8 +15,8 @@ function checkIfBlank(input) {
 function getPlecValue() {
     var k = document.getElementById("K");
     var m = document.getElementById("M");
-    if(k.checked) return k;
-    else if(m.checked) return m;
+    if(k.checked) return k.value;
+    else if(m.checked) return m.value;
     return "";
 }
 
@@ -24,9 +24,9 @@ function getStanowiskoValue() {
     var z = document.getElementById("1");
     var r = document.getElementById("2");
     var w = document.getElementById("3");
-    if(z.checked) return z;
-    else if(r.checked) return r;
-    else if(w.checked) return w;
+    if(z.checked) return z.value;
+    else if(r.checked) return r.value;
+    else if(w.checked) return w.value;
     return "";
 }
 

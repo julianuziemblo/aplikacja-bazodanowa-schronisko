@@ -1,5 +1,7 @@
 package bdbt_project.SpringApplication.dbtables;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Objects;
 
 public class Zwierze {
@@ -17,6 +19,9 @@ public class Zwierze {
     private int nr_schroniska;
     private String data_przyjecia_formatted;
     private String photosImagePath;
+    private MultipartFile image;
+    private boolean czyWSchronisku;
+    private String czyWSchroniskuFormatted;
 
     public Zwierze(){}
 
@@ -39,9 +44,17 @@ public class Zwierze {
         this.nr_schroniska = nr_schroniska;
     }
 
+    public String getCzyWSchroniskuFormatted() {
+        if(czyWSchronisku) return "Tak";
+        return "Nie";
+    }
 
-    public String getPhotosImagePath() {
-        return "src/main/resources/static/assets/animals/" + nr_zwerzecia + ".png";
+    public boolean isCzyWSchronisku() {
+        return czyWSchronisku;
+    }
+
+    public void setCzyWSchronisku(boolean czyWSchronisku) {
+        this.czyWSchronisku = czyWSchronisku;
     }
 
     public int getNr_zwerzecia() {
@@ -76,7 +89,7 @@ public class Zwierze {
         this.rasa = rasa;
     }
 
-    public String getPlec() {
+    public String getPlec_formatted() {
         String sex;
         if(this.plec == 'M') {
             sex = "Samiec";
@@ -86,11 +99,19 @@ public class Zwierze {
         return sex;
     }
 
+    public char getPlec() {
+        return this.plec;
+    }
+
     public void setPlec(char plec) {
         this.plec = plec;
     }
 
-    public String getRozmiar() {
+    public char getRozmiar() {
+        return this.rozmiar;
+    }
+
+    public String getRozmiar_formatted() {
         String size;
         if(this.rozmiar == 'S') {
             size = "Mały";
@@ -151,10 +172,18 @@ public class Zwierze {
         this.nr_schroniska = nr_schroniska;
     }
 
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Zwierze{" +
-                "nr_zwierzecia=" + nr_zwerzecia +
+                "nr_zwerzecia=" + nr_zwerzecia +
                 ", imie='" + imie + '\'' +
                 ", gatunek='" + gatunek + '\'' +
                 ", rasa='" + rasa + '\'' +

@@ -99,4 +99,19 @@ public class UmowaDAO {
         jdbcTemplate.update(sql);
     }
 
+    public List<Zwierze> getCzyWSchronisku(List<Zwierze> zwierzeta) {
+        var newList = new ArrayList<Zwierze>();
+        for(var z: zwierzeta) {
+            String sql = "SELECT * FROM UMOWY WHERE nr_zwerzecia='"+z.getNr_zwerzecia()+"'";
+            var umowy = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Umowa.class));
+            if(umowy.isEmpty() || umowy.get(0).getRodzaj() == 'P') {
+                z.setCzyWSchronisku(true);
+            } else {
+                z.setCzyWSchronisku(false);
+            }
+            newList.add(z);
+        }
+        return newList;
+    }
+
 }

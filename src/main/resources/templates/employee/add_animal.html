@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Dodaj zwierzę</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+<body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar-logged-emp" ></header>
+
+<div class="container" align="center">
+    <!-- Page header -->
+    <h1>Dodaj zwierzę</h1>
+
+    <br/>
+    <h2>Dane zwierzęcia</h2>
+
+    <form id="form" action="#" th:action="@{/saveZwierze}" th:object="${zwierze}" method="post" enctype="multipart/form-data">
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Imię </td>
+                <td><input id="imie" type="text" th:field="*{imie}" aria-required="false" /></td>
+            </tr>
+            <tr>
+                <td>Gatunek <span style="color:crimson">*</span></td>
+                <td>
+                    <fieldset id="gatunek" th:field="*{gatunek}" aria-required="true">
+                        <input type="radio" value="Pies" th:value="Pies" id="Pies" name="gatunek"/>
+                        <label for="Pies">Pies</label>
+                        <input type="radio" value="Kot" th:value="Kot" id="Kot" name="gatunek"/>
+                        <label for="Kot">Kot</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td>Rasa </td>
+                <td><input id="rasa" type="text" th:field="*{rasa}" aria-required="false"/></td>
+            </tr>
+            <tr>
+                <td>Płeć <span style="color:crimson">*</span></td>
+                <td>
+                    <fieldset id="plec" th:field="*{plec}" aria-required="true">
+                        <input type="radio" value="K" th:value="K" id="K" name="plec"/>
+                        <label for="K">Samica</label>
+                        <input type="radio" value="M" th:value="M" id="M" name="plec"/>
+                        <label for="M">Samiec</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td>Rozmiar <span style="color:crimson">*</span></td>
+                <td>
+                    <fieldset id="rozmiar" th:field="*{rozmiar}" aria-required="true">
+                        <input type="radio" value="M" th:value="M" id="mały" name="rozmiar"/>
+                        <label for="mały">Mały</label>
+                        <input type="radio" value="S" th:value="S" id="średni" name="rozmiar"/>
+                        <label for="średni">Średni</label>
+                        <input type="radio" value="D" th:value="D" id="duży" name="rozmiar"/>
+                        <label for="duży">Duży</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td>Szacowany koszt utrzymania <span style="color:crimson">*</span></td>
+                <td><input id="koszt_utrzymania" type="number" th:field="*{koszt_utrzymania}" aria-required="true"/> zł</td>
+            </tr>
+            <tr>
+                <td>Umaszczenie <span style="color:crimson">*</span></td>
+                <td><input id="umaszczenie" type="text" th:field="*{umaszczenie}" aria-required="true"/></td>
+            </tr>
+            <tr>
+                <td>Nazwa karmy <span style="color:crimson">*</span></td>
+                <td><input id="nazwa_karmy" type="text" th:field="*{nazwa_karmy}" aria-required="true"/></td>
+            </tr>
+            <tr>
+                <td>Data przyjęcia <span style="color:crimson">*</span></td>
+                <td><input id="data_przyjecia" type="date" th:field="*{data_przyjecia}" aria-required="true"/></td>
+            </tr>
+            <tr>
+                <td>Zdjęcie </td>
+                <td><input id="image" type="file" accept="image/*" th:field="*{image}" aria-required="false"/></td>
+            </tr>
+        </table>
+        <button class="btn" style="background-color:#9eff21" type="submit" id="sub">Zatwierdź</button>
+        <br/>
+        <br/>
+    </form>
+</div>
+<br/>
+<br/>
+<br/>
+<script th:src="@{/js/validator_z.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
+</body>
+</html>

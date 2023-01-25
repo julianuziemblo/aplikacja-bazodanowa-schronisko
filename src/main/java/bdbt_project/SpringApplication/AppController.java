@@ -4,10 +4,15 @@ import bdbt_project.SpringApplication.dbDAO.*;
 import bdbt_project.SpringApplication.dbtables.*;
 import bdbt_project.SpringApplication.dto.KlientPassword;
 
+import bdbt_project.SpringApplication.files.FilesStorageService;
+import bdbt_project.SpringApplication.files.FilesStorageServiceImpl;
+import bdbt_project.SpringApplication.files.ResponseMessage;
 import bdbt_project.SpringApplication.filters.*;
 import bdbt_project.SpringApplication.utility.RandomUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,11 +22,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +61,9 @@ public class AppController implements WebMvcConfigurer {
 
     @Autowired
     private final SchroniskoDAO schroniskoDAO = new SchroniskoDAO(new JdbcTemplate());
+
+    @Autowired
+    private FilesStorageService storageService = new FilesStorageServiceImpl();
 
     private final KlientPasswordDAO klientPasswordDAO = new KlientPasswordDAO();
 
@@ -78,6 +96,8 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/umowa").setViewName("employee/umowa");
         registry.addViewController("/employees").setViewName("admin/employees");
         registry.addViewController("/add_employee").setViewName("admin/add_employee");
+        registry.addViewController("/add_animal").setViewName("employee/add_animal");
+        registry.addViewController("/all_animals").setViewName("all_animals");
     }
 
     @Controller
@@ -167,9 +187,11 @@ public class AppController implements WebMvcConfigurer {
 
     @RequestMapping("/zwierzeta")
     public String showZwierzeta(Model model) {
-        List<Zwierze> listZwierzeta;
         var params = gatunekFilter.getSelected();
-        listZwierzeta = zwierzeDAO.listWhereGatunek(params);
+
+        var lista = zwierzeDAO.listWhereGatunek(params);
+        var lista2 = umowaDAO.getCzyWSchronisku(lista);
+        var listZwierzeta = zwierzeDAO.getAvailableOnly(lista2);
         model.addAttribute("gatunekFilter", gatunekFilter);
         model.addAttribute("listZwierzeta", listZwierzeta);
         return "/zwierzeta";
@@ -319,4 +341,41 @@ public class AppController implements WebMvcConfigurer {
         return "redirect:/admin/employees";
     }
 
+    @RequestMapping("/employee/add_animal")
+    public void showAddAnimal(Model model) {
+        var zwierze = new Zwierze();
+        model.addAttribute("zwierze", zwierze);
+    }
+
+    @RequestMapping(value={"/saveZwierze"}, method=RequestMethod.POST)
+    public String saveZwierze(@ModelAttribute("zwierze") Zwierze zwierze) throws IOException {
+        zwierze.setNr_schroniska(1);
+        zwierze.setNr_zwerzecia(0);
+        System.out.println(zwierze);
+        zwierzeDAO.save(zwierze);
+        var id = zwierzeDAO.getMostRecentZwierzeId().getNr_zwerzecia();
+        var file = zwierze.getImage();
+        System.out.println(zwierze);
+        try {
+            storageService.save(file, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/main";
+    }
+
+    @RequestMapping("/all_animals")
+    public void showAllAnimals(Model model) {
+        var params = gatunekFilter.getSelected();
+        var lista = zwierzeDAO.listWhereGatunek(params);
+        var listZwierzeta = umowaDAO.getCzyWSchronisku(lista);
+        model.addAttribute("gatunekFilter2", gatunekFilter);
+        model.addAttribute("listZwierzeta1", listZwierzeta);
+    }
+
+    @RequestMapping(value={"/getFilter2"}, method=RequestMethod.POST)
+    public String changeFilter2(@ModelAttribute("gatunekFilter2") GatunekFilter gatunekFilter) {
+        this.gatunekFilter = gatunekFilter;
+        return "redirect:/all_animals";
+    }
 }

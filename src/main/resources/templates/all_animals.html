@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wszystkie zwierzęta</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar-logged-emp" ></header>
+
+<br/>
+<br/>
+<h1 align="center">Zwierzęta</h1>
+<br/>
+<div class="container" align="center">
+    <a class="btn" style="background-color:#9eff21;color:black;font-size:20px" th:href="@{/employee/add_animal}">Dodaj zwierzę</a>
+</div>
+<br/>
+<br/>
+<div class="container" align="center">
+    <form id="form" action="#" th:action="@{/getFilter2}" th:object="${gatunekFilter2}" method="post">
+        <div th:object="${gatunekFilter2}"  class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Filtruj
+            </button>
+            <div th:object="${gatunekFilter2}"  class="dropdown-menu" aria-labelledby="dropdownMenuButton" align="center">
+                <input type="checkbox" th:field="*{pies}" value="Pies" th:value="Pies" id="Pies" name="Pies"/>
+                <label for="Pies">Pies</label>
+                <input type="checkbox" th:field="*{kot}" value="Kot" th:value="Kot" id="Kot" name="Kot"/>
+                <label for="Kot">Kot</label>
+                <br/>
+                <button type="submit">Filtruj</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br/>
+
+<div class="container" align="center">
+    <div class="card" style="width: 18rem;" th:each="zw: ${listZwierzeta1}">
+        <div class="card-body">
+            <img class="rounded" th:src="@{${'assetes/animals/'+ zw.nr_zwerzecia +'.png'}}" width="200px"/>
+            <br/>
+            <br/>
+            <h4 class="card-title" th:text="${zw.imie}"><b>Imię</b></h4>
+            <p><label for="rasa">Rasa: </label>
+                <span class="card-text" id="rasa" th:text="${zw.rasa != null} ? ${zw.rasa} : 'Nieznana'">Rasa</span></p>
+            <p><label for="plec">Płeć: </label>
+                <span class="card-text" id="plec" th:text="${zw.plec}">Płeć</span></p>
+            <p><label for="rozmiar">Rozmiar: </label>
+                <span class="card-text" id="rozmiar" th:text="${zw.rozmiar}">Rozmiar</span></p>
+            <p><label for="rozmiar">Czy w schronisku: </label>
+                <span class="card-text" id="W schronisku: " th:text="${zw.czyWSchroniskuFormatted}">Czy w schronisku: </span></p>
+            <br/>
+            <form th:action="@{selectAnimal1}" th:object="${selected1}" method="post">
+                <input type="hidden" class="form-control" th:value="${zw.nr_zwerzecia}" id="selected1" name="selected1">
+                <button class="btn btn-link" type="submit">Więcej informacji</button>
+            </form>
+        </div>
+        <br/>
+        <br/>
+    </div>
+    <br/>
+    <br/>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
+</body>
+</html>
