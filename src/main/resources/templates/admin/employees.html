@@ -38,11 +38,11 @@
         <tr th:each="p : ${pracownicyList}">
             <td th:text="${p.imie}">Imię</td>
             <td th:text="${p.nazwisko}">Nazwisko</td>
-            <td th:text="${p.data_urodzenia}">Data urodzenia</td>
+            <td th:text="${p.data_urodzenia_formatted}">Data urodzenia</td>
             <td th:text="${p.pesel}">PESEL</td>
             <td th:text="${p.email}">Email</td>
-            <td th:text="${p.nr_telefonu}">Numer telefonu</td>
-            <td th:text="${p.nr_konta}">Numer konta</td>
+            <td th:text="${p.nr_telefonu_formatted}">Numer telefonu</td>
+            <td th:text="${p.nr_konta_formatted}">Numer konta</td>
             <td th:text="${p.stanowisko_formatted}">Stanowisko</td>
             <td>
                 <form id="form1" action="#" th:action="@{/fire}" th:object="${fired}" method="post">
@@ -57,7 +57,6 @@
     <br/>
 </div>
 
-<script th:src="@{/js/fire.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

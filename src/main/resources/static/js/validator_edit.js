@@ -28,7 +28,6 @@ function validate(event) {
     input.set("Data_urodzenia", document.getElementById("data_urodzenia").value);
     input.set("Plec", getPlecValue());
     input.set("Numer_telefonu", document.getElementById("nr_telefonu").value);
-    input.set("Email", document.getElementById("email").value);
     input.set("Haslo", document.getElementById("password").value);
     input.set("Potwierdz_haslo", document.getElementById("confirmPassword").value);
     input.set("Kraj", document.getElementById("kraj").value);
@@ -37,16 +36,6 @@ function validate(event) {
     input.set("Ulica", document.getElementById("ulica").value);
     input.set("Numer_domu", document.getElementById("nr_domu").value);
 
-    for(const key of input.keys()) {
-        if(input.get(key) == "") {
-            window.alert("Błąd: pole " + key + " nie może być puste!");
-            return false;
-        }
-        if(input.get(key) == undefined) {
-            window.alert("Błąd: pole " + key + " nie może być puste!");
-            return false;
-        }
-    }
     if(input.get("Imie").length > 20) {
         window.alert("Błąd: pole Imie nie może przekraczać 20 znaków!");
         return false;
@@ -55,7 +44,7 @@ function validate(event) {
         window.alert("Błąd: pole Nazwisko nie może przekraczać 30 znaków!");
         return false;
     }
-    if(input.get("Kod_pocztowy").length > 5 || input.get("Kod_pocztowy").length < 5) {
+    if(input.get("Kod_pocztowy").length != 0 && (input.get("Kod_pocztowy").length > 5 || input.get("Kod_pocztowy").length < 5)) {
         window.alert("Błąd: pole Kod pocztowy musi zawierać dokładnie 5 cyfr!");
         return false;
     }
@@ -69,7 +58,7 @@ function validate(event) {
         return false;
     }
     console.log("Validation clear");
-    alert("Konto założone pomyślnie! Poczekaj na zaakceptowanie przez naszego pracownika");
+    alert("Edytowano dane");
     document.getElementById('form').submit();
     return true;
 }

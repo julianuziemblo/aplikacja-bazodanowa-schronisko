@@ -26,13 +26,14 @@
             <div class="card-body" th:each="a: ${listAdresy}">
                 <h6 class="card-title"><b>Lokalizacja:</b></h6>
                 <p class="card-text">
-                    Ulica
+                    ul.
                     <span th:text="${a.ulica}"></span>
                     <span th:text="${a.nr_domu}"></span>,
-                    <span th:text="${a.kod_pocztowy}"></span>
+                    <span th:text="${a.kod_pocztowy_formatted}"></span>
                     <span th:text="${a.miasto}"></span>,
                     <span th:text="${a.kraj}"></span>.
                 </p>
+                <p class="card-text"><a th:href="${'https://www.google.pl/maps/place/'+ a.ulica_formatted + a.nr_domu + '+' + a.kod_pocztowy_formatted + '+' + a.miasto}">Zobacz w GoogleMaps</a></p>
             </div>
         </div>
     </div>

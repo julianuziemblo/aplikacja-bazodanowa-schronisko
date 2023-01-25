@@ -63,6 +63,11 @@ public class Klient {
         this.data_urodzenia = data_urodzenia;
     }
 
+    public String getData_urodzenia_formatted() {
+        var split = this.data_urodzenia.split(" ");
+        return split[0];
+    }
+
     public String getPesel() {
         return pesel;
     }
@@ -77,6 +82,11 @@ public class Klient {
 
     public void setPlec(char plec) {
         this.plec = plec;
+    }
+
+    public String getPlec_formatted() {
+        if(plec =='K') return "Kobieta";
+        return "Mężczyzna";
     }
 
     public String getEmail() {

@@ -44,9 +44,9 @@
             <p><label for="rasa">Rasa: </label>
             <span class="card-text" id="rasa" th:text="${zw.rasa != null} ? ${zw.rasa} : 'Nieznana'">Rasa</span></p>
             <p><label for="plec">Płeć: </label>
-            <span class="card-text" id="plec" th:text="${zw.plec}">Płeć</span></p>
+            <span class="card-text" id="plec" th:text="${zw.plec_formatted}">Płeć</span></p>
             <p><label for="rozmiar">Rozmiar: </label>
-            <span class="card-text" id="rozmiar" th:text="${zw.rozmiar}">Rozmiar</span></p>
+            <span class="card-text" id="rozmiar" th:text="${zw.rozmiar_formatted}">Rozmiar</span></p>
             <form th:action="@{selectAnimal1}" th:object="${selected1}" method="post">
                 <input type="hidden" class="form-control" th:value="${zw.nr_zwerzecia}" id="selected1" name="selected1">
                 <button class="btn btn-link" type="submit">Więcej informacji</button>

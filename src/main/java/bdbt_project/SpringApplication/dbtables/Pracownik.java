@@ -1,5 +1,7 @@
 package bdbt_project.SpringApplication.dbtables;
 
+import java.util.Objects;
+
 public class Pracownik {
     private int nr_pracownika;
     private String imie;
@@ -81,6 +83,11 @@ public class Pracownik {
         this.data_urodzenia = data_urodzenia;
     }
 
+    public String getData_urodzenia_formatted() {
+        var split = this.data_urodzenia.split(" ");
+        return split[0];
+    }
+
     public String getPesel() {
         return pesel;
     }
@@ -115,12 +122,22 @@ public class Pracownik {
         this.nr_telefonu = nr_telefonu;
     }
 
+    public String getNr_telefonu_formatted() {
+        if(nr_telefonu == null || Objects.equals(nr_telefonu, "")) return "Nie posiada";
+        return nr_telefonu;
+    }
+
     public String getNr_konta() {
         return nr_konta;
     }
 
     public void setNr_konta(String nr_konta) {
         this.nr_konta = nr_konta;
+    }
+
+    public String getNr_konta_formatted() {
+        if(nr_konta == null || Objects.equals(nr_konta, "")) return "Wypłata gotówką";
+        return nr_konta;
     }
 
     public char getSposob_wyplaty() {

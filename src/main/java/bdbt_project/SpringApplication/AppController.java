@@ -6,37 +6,24 @@ import bdbt_project.SpringApplication.dto.KlientPassword;
 
 import bdbt_project.SpringApplication.files.FilesStorageService;
 import bdbt_project.SpringApplication.files.FilesStorageServiceImpl;
-import bdbt_project.SpringApplication.files.ResponseMessage;
 import bdbt_project.SpringApplication.filters.*;
 import bdbt_project.SpringApplication.utility.RandomUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +50,10 @@ public class AppController implements WebMvcConfigurer {
     private final SchroniskoDAO schroniskoDAO = new SchroniskoDAO(new JdbcTemplate());
 
     @Autowired
-    private FilesStorageService storageService = new FilesStorageServiceImpl();
+    private final WynagrodzenieDAO wynagrodzenieDAO = new WynagrodzenieDAO(new JdbcTemplate());
+
+    @Autowired
+    private final FilesStorageService storageService = new FilesStorageServiceImpl();
 
     private final KlientPasswordDAO klientPasswordDAO = new KlientPasswordDAO();
 
@@ -82,7 +72,6 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/main_admin").setViewName("admin/main_admin");
         registry.addViewController("/main_user").setViewName("user/main_user");
-        registry.addViewController("/adresy").setViewName("adresy");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/navbar").setViewName("navbar");
         registry.addViewController("/zwierzeta").setViewName("zwierzeta");
@@ -98,6 +87,8 @@ public class AppController implements WebMvcConfigurer {
         registry.addViewController("/add_employee").setViewName("admin/add_employee");
         registry.addViewController("/add_animal").setViewName("employee/add_animal");
         registry.addViewController("/all_animals").setViewName("all_animals");
+        registry.addViewController("/user_profile").setViewName("user/user_profile");
+        registry.addViewController("/edit_profile").setViewName("user/edit_profile");
     }
 
     @Controller
@@ -309,7 +300,9 @@ public class AppController implements WebMvcConfigurer {
     public void showPracownicy(Model model) {
         model.addAttribute("fired", pracownikFilter);
         if(this.pracownikFilter.getSelected().size() != 0) {
-            pracownikDAO.delete(Integer.parseInt(this.pracownikFilter.getSelected().get(0)));
+            var nr_pracownika = Integer.parseInt(this.pracownikFilter.getSelected().get(0));
+            wynagrodzenieDAO.deleteByIdPracownik(nr_pracownika);
+            pracownikDAO.delete(nr_pracownika);
         }
         var pracownicyList = pracownikDAO.list();
         model.addAttribute("pracownicyList", pracownicyList);
@@ -377,5 +370,44 @@ public class AppController implements WebMvcConfigurer {
     public String changeFilter2(@ModelAttribute("gatunekFilter2") GatunekFilter gatunekFilter) {
         this.gatunekFilter = gatunekFilter;
         return "redirect:/all_animals";
+    }
+
+    @RequestMapping("/user/user_profile")
+    public void showUserProfile(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        var klient = klientDAO.getByEmail(email);
+        var adres = adresDAO.getNrAdresu(klient.getNr_adresu());
+        model.addAttribute("klient", klient);
+        model.addAttribute("adres", adres);
+    }
+
+    @RequestMapping("/user/edit_profile")
+    public void showEditProfileForm(Model model) {
+        var klient = new Klient();
+        var klientHaslo = new KlientPassword();
+        var adres = new Adres();
+        model.addAttribute("klientDAO", klient);
+        model.addAttribute("klientHaslo", klientHaslo);
+        model.addAttribute("adresDAO", adres);
+    }
+
+    @RequestMapping(value="/save_klient_data2", method=RequestMethod.POST)
+    public String saveKlientData2(@ModelAttribute("klientDAO") Klient klient,
+                                 @ModelAttribute("adresDAO") Adres adres,
+                                 @ModelAttribute("klientHaslo") KlientPassword kh) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        var currentKlient = klientDAO.getByEmail(email);
+        var currentAdres = adresDAO.getNrAdresu(currentKlient.getNr_adresu());
+        currentAdres = adresDAO.updateOnlyNotNull(currentAdres, adres);
+        currentKlient = klientDAO.updateOnlyNotNull(currentKlient, klient);
+        kh.setEmail(email);
+        klientDAO.update(currentKlient);
+        if(kh.getPassword() != null && !kh.getPassword().equals("")) {
+            klientPasswordDAO.save(kh);
+        }
+        adresDAO.update(currentAdres);
+        return "redirect:/user/user_profile";
     }
 }

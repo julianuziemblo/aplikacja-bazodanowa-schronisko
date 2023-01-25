@@ -76,6 +76,26 @@ public class Adres {
         this.nr_mieszkania = nr_mieszkania;
     }
 
+    public String getKod_pocztowy_formatted() {
+        var split = this.kod_pocztowy.split("");
+        return split[0]+split[1]+"-"+split[2]+split[3]+split[4];
+    }
+
+    public String getUlica_formatted() {
+        var split = this.miasto.split(" ");
+        StringBuilder formatted = new StringBuilder();
+        for(var elem: split) {
+            formatted.append(elem);
+            formatted.append("+");
+        }
+        return formatted.toString();
+    }
+
+    public String getNr_mieszkania_formatted() {
+        if(nr_mieszkania == null) return "-";
+        return String.valueOf(nr_mieszkania);
+    }
+
     @Override
     public String toString() {
         return "Adres{" +

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Profil użytkownika</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<header th:insert="fragments/navbars.html :: navbar" ></header>
+<br/>
+<h1 align="center">Profil użytkownika <span style="color:lightskyblue">[[${#httpServletRequest.remoteUser}]]</span></h1>
+<br/>
+<br/>
+<div class="container" align="center">
+    <div class="row">
+        <div class="col">
+            <h3 align="center">Dane osobiste</h3>
+            <br/>
+            <table border="0" cellpadding="10"  th:each="k : ${klient}">
+                <tr>
+                    <td>Imię: </td>
+                    <td th:text="${k.imie}"></td>
+                </tr>
+                <tr>
+                    <td>Imię: </td>
+                    <td th:text="${k.nazwisko}"></td>
+                </tr>
+                <tr>
+                    <td>Data urodzenia: </td>
+                    <td th:text="${k.data_urodzenia_formatted}"></td>
+                </tr>
+                <tr>
+                    <td>PESEL: </td>
+                    <td th:text="${k.pesel}"></td>
+                </tr>
+                <tr>
+                    <td>Płeć: </td>
+                    <td th:text="${k.plec_formatted}"></td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td th:text="${k.email}"></td>
+                </tr>
+                <tr>
+                    <td>Numer telefonu: </td>
+                    <td th:text="${k.nr_telefonu}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col">
+            <h3 align="center">Dane adresowe</h3>
+            <br/>
+            <table border="0" cellpadding="10"  th:each="a : ${adres}">
+                <tr>
+                    <td>Kraj: </td>
+                    <td th:text="${a.kraj}"></td>
+                </tr>
+                <tr>
+                    <td>Miasto: </td>
+                    <td th:text="${a.miasto}"></td>
+                </tr>
+                <tr>
+                    <td>Kod pocztowy: </td>
+                    <td th:text="${a.kod_pocztowy_formatted}"></td>
+                </tr>
+                <tr>
+                    <td>Ulica: </td>
+                    <td th:text="${a.ulica}"></td>
+                </tr>
+                <tr>
+                    <td>Numer domu: </td>
+                    <td th:text="${a.nr_domu}"></td>
+                </tr>
+                <tr>
+                    <td>Numer mieszkania: </td>
+                    <td th:text="${a.nr_mieszkania_formatted}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <a th:href="@{/user/edit_profile}" class="btn btn-warning">Edytuj</a>
+    <a th:href="@{/main}" style="background-color:#9eff21;color:black" class="btn">Powrót</a>
+</div>
+
+<br/>
+<br/>
+<br/>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+<footer th:insert="fragments/footers.html :: footer-all" ></footer>
+</body>
+</html>

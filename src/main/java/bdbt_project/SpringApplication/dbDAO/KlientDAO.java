@@ -1,5 +1,6 @@
 package bdbt_project.SpringApplication.dbDAO;
 
+import bdbt_project.SpringApplication.dbtables.Adres;
 import bdbt_project.SpringApplication.dbtables.Klient;
 import bdbt_project.SpringApplication.dbtables.Umowa;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 @Transactional
@@ -58,5 +60,26 @@ public class KlientDAO {
             klienci.add(getByNrKlienta(umowa.getNr_klienta()));
         }
         return klienci;
+    }
+
+    public void update(Klient k) {
+        String sql = "UPDATE KLIENCI SET imie='"+k.getImie()+"', nazwisko='"+k.getNazwisko()+"', " +
+                "data_urodzenia='"+ k.getData_urodzenia_formatted()+"', pesel='"+k.getPesel()+"', " +
+                "plec='"+k.getPlec()+"', email='"+k.getEmail()+"', " +
+                "nr_telefonu='"+k.getNr_telefonu()+"' " +
+                "WHERE nr_klienta='"+k.getNr_klienta()+"'";
+        System.out.println(sql);
+        jdbcTemplate.update(sql);
+    }
+
+    public Klient updateOnlyNotNull(Klient current, Klient newA) {
+        System.out.println(newA);
+        if(newA.getImie() != null && !Objects.equals(newA.getImie(), "")) current.setImie(newA.getImie());
+        if(newA.getNazwisko() != null && !Objects.equals(newA.getNazwisko(), "")) current.setNazwisko(newA.getNazwisko());
+        if(newA.getData_urodzenia() != null && !Objects.equals(newA.getData_urodzenia(), "")) current.setData_urodzenia(newA.getData_urodzenia());
+        if(newA.getPesel() != null && !Objects.equals(newA.getPesel(), "")) current.setPesel(newA.getPesel());
+        if(newA.getEmail() != null && !Objects.equals(newA.getEmail(), "")) current.setEmail(newA.getEmail());
+        if(newA.getNr_telefonu() != null && !Objects.equals(newA.getNr_telefonu(), "")) current.setNr_telefonu(newA.getNr_telefonu());
+        return current;
     }
 }
