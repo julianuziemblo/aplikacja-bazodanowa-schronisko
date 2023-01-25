@@ -15,13 +15,14 @@
 
 <div class="container" align="center">
     <div class="row">
-        <div class="col-md-4 mt-5">
-            <form method="post" th:action="@{/index}">
+        <div class="col">
+            <form method="post" th:action="@{/login}">
                 <div class="form-group">
                     <div><p style="font-size:30px"><b>Błąd</b></p></div>
-                    <div><p style="font-size:24px">403 - Forbidden page</p></div>
+                    <div><p style="font-size:24px">Wystąpił błąd: 403 - Nie masz uprawnień do wejścia na podaną stronę.</p></div>
+                    <div><p class="text-secondary" style="font-size:18px">Aby uzyskać uprawnienia, zaloguj się.</p></div>
                 </div>
-                <button style="background-color:#9eff21;color=black" class="btn" type="submit" value="Sign In">Powrót</button>
+                <button style="background-color:#9eff21;color=black" class="btn" type="submit" value="Sign In">Zaloguj się</button>
             </form>
         </div>
     </div>
